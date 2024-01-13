@@ -5,16 +5,16 @@ import axios from "axios";
 
 axios.defaults.withCredentials = true;
 
-axios.create({
-    baseURL: "http://madticket.pythonanywhere.com",
-    headers: {
-        "post": "true",
-        "Content-Type": "application/json"
-    },
-    withCredentials: true
-});
+// axios.create({
+//     baseURL: "http://madticket.pythonanywhere.com",
+//     headers: {
+//         "post": "true",
+//         "Content-Type": "application/json"
+//     },
+//     withCredentials: true
+// });
 
-const Header = () => {
+const Header = ({ isLoggedIn, onLogout }) => {
 
     // async function loginBtn () {
     //     // try{
@@ -35,45 +35,47 @@ const Header = () => {
     //     //     console.error(e)
     //     // }
     // }
+
     return (
         <header className={styles.header}>
             <div className={styles.contents}>
                 <div className={styles.logo}>
-                    LOGO
-                    {/* <Link to="/">LOGO</Link> */}
+                    {/* LOGO */}
+                    <Link to="/">LOGO</Link>
                 </div>
 
                 <nav className={styles.navigation}>
                     <ul>
-                        <li>
+                        {/* <li>
                             <Link to="/">홈</Link>
                             <script>
                                 console.log("Home");
                             </script>
                         </li>
-                        &nbsp;&nbsp; | &nbsp;&nbsp;
+                        &nbsp;&nbsp; | &nbsp;&nbsp; */}
                         <li>
-                            <Link to="/board">게시판</Link>
+                            <Link to="/board">전체보기</Link>
                         </li>
                     </ul>
                 </nav>
                 <nav className={styles.navigation}>
                     <ul>
                         <li>
-                            {/* <a href='http://madticket.pythonanywhere.com/login'>로그인</a>
-                            <script>
-                                console.log("Hello world");
-                                console.log(response.data);
-                                const response = await axios.post("http://madticket.pythonanywhere.com/login", { });
-                                console.log("Hello world");
-                                console.log(response.data);
-                            </script> */}
-                            {/* <button onClick={loginBtn}>로그인</button> */}
-                            <Link to="/login">로그인</Link>
-                        </li>
-                        &nbsp;&nbsp; | &nbsp;&nbsp;
-                        <li>
-                            <Link to="/register">회원가입</Link>
+                            {isLoggedIn ? (
+                                <>
+                                    <Link to="/" onClick={onLogout}>
+                                        로그아웃
+                                    </Link>
+                                    &nbsp;&nbsp; | &nbsp;&nbsp;
+                                    <Link to="/mypage">마이페이지</Link>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to="/login">로그인</Link>
+                                    &nbsp;&nbsp; | &nbsp;&nbsp;
+                                    <Link to="/signup">회원가입</Link>
+                                </>
+                            )}
                         </li>
                     </ul>
                 </nav>

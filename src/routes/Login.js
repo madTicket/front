@@ -82,8 +82,10 @@ import React from 'react';
 import { InputWithLabel, AuthButton, RightAlignedLink } from '../components/Auth';
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+    const navigate = useNavigate();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -93,7 +95,7 @@ const Login = () => {
         if (!email) {
             alert('아이디를 입력해주세요.');
             return false;
-        }else if (!password){
+        } else if (!password) {
             alert('비밀번호를 입력해주세요.');
             return false;
         }
@@ -102,10 +104,24 @@ const Login = () => {
             console.log('Email:', email);
             console.log('Password:', password);
 
-            const response = await axios.post("http://192.249.31.65:5000/login",{email:email, password:password},{
+            const response = await axios.post("http://192.249.31.65:5000/login", { email: email, password: password }, {
                 withCredentials: true
             })
             console.log(" ", response.data)
+            if (response.data.message === 'Found user') {
+                // Save JWT token to local storage
+                localStorage.clear()
+                localStorage.setItem('email', response.data.email)
+                localStorage.setItem('login-token', response.data.jwt);
+
+                await new Promise((resolve) => setTimeout(resolve, 0));
+                // Redirect to the home page
+                navigate('/');
+                window.location.reload();
+            } else {
+                // Handle other cases if needed
+                alert('로그인 실패');
+            }
         } catch (e) {
             console.error(e)
         }
