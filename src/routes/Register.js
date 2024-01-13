@@ -3,6 +3,7 @@ import { InputWithLabel, AuthButton, RightAlignedLink, AuthContent } from '../co
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from './config';
 
 function Register() {
     const navigate = useNavigate();
@@ -23,7 +24,7 @@ function Register() {
             return false;
         }
         try {
-            const response = await axios.post("http://192.249.31.65:5000/signUp", { userName: username, userId: userid, email: email, password: password }, {
+            const response = await axios.post("${API_BASE_URL}/signUp", { userName: username, userId: userid, email: email, password: password }, {
                 withCredentials: true
             })
             console.log(" ", response.data)

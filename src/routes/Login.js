@@ -83,6 +83,7 @@ import { InputWithLabel, AuthButton, RightAlignedLink } from '../components/Auth
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from './config';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -104,7 +105,7 @@ const Login = () => {
             console.log('Email:', email);
             console.log('Password:', password);
 
-            const response = await axios.post("http://192.249.31.65:5000/login", { email: email, password: password }, {
+            const response = await axios.post("${API_BASE_URL}/login", { email: email, password: password }, {
                 withCredentials: true
             })
             console.log(" ", response.data)
