@@ -2,7 +2,7 @@
   "name": "second-try",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://192.249.31.9:5000",
+  "proxy": "http://192.249.31.65:5000",
   "dependencies": {
     "@react-oauth/google": "^0.12.1",
     "@testing-library/jest-dom": "^5.17.0",
@@ -11,10 +11,12 @@
     "axios": "^1.6.5",
     "jwt-decode": "^4.0.0",
     "node-sass": "^7.0.3",
+    "open-color": "^1.9.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.21.2",
     "react-scripts": "5.0.1",
+    "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
