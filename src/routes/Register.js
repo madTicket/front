@@ -3,7 +3,7 @@ import { InputWithLabel, AuthButton, RightAlignedLink, AuthContent } from '../co
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from './config';
+import { API_BASE_URL } from '../config';
 
 function Register() {
     const navigate = useNavigate();
