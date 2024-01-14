@@ -6,6 +6,7 @@ import './SearchBar.scss';
 import _debounce from 'lodash/debounce';
 import { ReactComponent as Arrow } from "../../assets/images/north_west.svg";
 import { ReactComponent as Search } from "../../assets/images/search.svg";
+import { Link } from "react-router-dom";
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -67,9 +68,12 @@ const SearchBar = () => {
             />
             <ul className='auto-search-container'>
                 {searchResults.map((result) => (
-                    <li key={result.category} className="search-result">{result.category}
-                        <Arrow width={25} height={25} fill='black' alt="arrowIcon" className='arrow-icon' />
-                    </li>
+                    <Link key={result.category} to={`/detail/${result.category}`} className="search-result-link">
+                        <li className="search-result">
+                            {result.category}
+                            <Arrow width={25} height={25} fill='black' alt="arrowIcon" className='arrow-icon' />
+                        </li>
+                    </Link>
                 ))}
             </ul>
         </div>

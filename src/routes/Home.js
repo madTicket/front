@@ -4,7 +4,7 @@ import SearchBar from '../components/SearchBar/SearchBar';
 
 const Home = () => {
     return (
-        <div>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <SearchBar />
         </div>
     );
