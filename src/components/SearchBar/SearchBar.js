@@ -20,27 +20,36 @@ const SearchBar = () => {
     const [searchResults, setSearchResults] = useState([]);
 
     const handleSearch = () => {
-        const filtered = categoryList.filter(
-            (item) => item.category.toLowerCase().includes(searchTerm.toLowerCase())
-        );
-        setSearchResults(filtered);
+        // const filtered = categoryList.filter(
+        //     (item) => item.category.toLowerCase().includes(searchTerm.toLowerCase())
+        // );
+        // setSearchResults(filtered);
 
         // 서버로 GET 요청을 보내기
-        // fetch(`${API_BASE_URL}/search?category=${encodeURIComponent(searchTerm)}`, {
-        //     method: 'GET',
-        //     headers: {
-        //         'Content-Type': 'application/json',
-        //         // 추가적인 헤더 설정 가능
-        //     },
-        // })
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         // 서버로부터 받은 JSON 데이터 처리
-        //         console.log(data);
-        //     })
-        //     .catch(error => {
-        //         console.error('Error:', error);
-        //     });
+        fetch(`${API_BASE_URL}/search?category=${encodeURIComponent(searchTerm)}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // 추가적인 헤더 설정 가능
+            },
+        })
+            .then(response => response.json())
+            .then(data => {
+                // console.log(categoryList)
+                // console.log(data.result);
+                // 서버로부터 받은 JSON 데이터 처리
+                // const categoryNames = data.map(result => result.category);
+                // setSearchResults(data.result);
+                // console.log(categoryNames);
+
+                console.log("data", data)
+                const dataArray = Object.values(data.result);
+                setSearchResults(dataArray);
+                console.log("dataArray", dataArray);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
 
     const debouncedSearch = _debounce(handleSearch, 300);
@@ -62,7 +71,7 @@ const SearchBar = () => {
             <Search width={25} height={25} fill='black' alt="searchIcon" className='search-icon' />
             <input className='search-bar'
                 type="text"
-                placeholder="검색어를 입력하세요"
+                placeholder="  검색어를 입력하세요"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />

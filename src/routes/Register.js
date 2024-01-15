@@ -1,9 +1,10 @@
 import React from 'react';
-import { InputWithLabel, AuthButton, RightAlignedLink, AuthContent } from '../components/Auth';
+import { InputWithLabel, AuthButton, RightAlignedLink, AuthContent, AuthWrapper } from '../components/Auth';
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
+import { Box } from '../components/CommonStyles';
 
 function Register() {
     const navigate = useNavigate();
@@ -43,15 +44,17 @@ function Register() {
     }
 
     return (
-        <AuthContent title="회원가입">
-            <InputWithLabel label="이름" name="username" placeholder="이름" value={username} onChange={(e) => setUserName(e.target.value)} />
-            <InputWithLabel label="별명" name="userid" placeholder="별명" value={userid} onChange={(e) => setUserId(e.target.value)} />
-            <InputWithLabel label="이메일" name="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
-            <InputWithLabel label="비밀번호" name="password" placeholder="비밀번호" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-            <InputWithLabel label="비밀번호 확인" name="passwordConfirm" placeholder="비밀번호 확인" type="password" value={passwordc} onChange={(e) => setPasswordC(e.target.value)} />
-            <AuthButton onClick={SignUp}>회원가입</AuthButton>
-            <RightAlignedLink to="/login">로그인</RightAlignedLink>
-        </AuthContent>
+        <AuthWrapper>
+            <AuthContent title="회원가입">
+                <InputWithLabel label="이름" name="username" placeholder="이름" value={username} onChange={(e) => setUserName(e.target.value)} />
+                <InputWithLabel label="별명" name="userid" placeholder="별명" value={userid} onChange={(e) => setUserId(e.target.value)} />
+                <InputWithLabel label="이메일" name="email" placeholder="이메일" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <InputWithLabel label="비밀번호" name="password" placeholder="비밀번호" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <InputWithLabel label="비밀번호 확인" name="passwordConfirm" placeholder="비밀번호 확인" type="password" value={passwordc} onChange={(e) => setPasswordC(e.target.value)} />
+                <AuthButton onClick={SignUp}>회원가입</AuthButton>
+                <RightAlignedLink to="/login">로그인</RightAlignedLink>
+            </AuthContent>
+        </AuthWrapper>
     );
 }
 

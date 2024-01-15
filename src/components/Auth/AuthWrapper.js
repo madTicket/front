@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 
 // 화면의 중앙에 위치시킨다
 const Positioner = styled.div`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    width: 500px;
+    margin: 0 auto;
 `;
 
 // 너비, 그림자 설정
@@ -18,7 +20,7 @@ const ShadowedBox = styled.div`
 
 // 로고
 const LogoWrapper = styled.div`
-    background: ${oc.teal[7]};
+    background: #E2F254;
     height: 5rem;
     display: flex;
     align-items: center;
@@ -26,7 +28,7 @@ const LogoWrapper = styled.div`
 `;
 
 const Logo = styled(Link)`
-    color: white;
+    color: black;
     font-family: 'Rajdhani';
     font-size: 2.4rem;
     letter-spacing: 5px;
@@ -40,11 +42,11 @@ const Contents = styled.div`
     height: auto;
 `;
 
-const AuthWrapper = ({children}) => (
+const AuthWrapper = ({ children }) => (
     <Positioner>
         <ShadowedBox>
             <LogoWrapper>
-                <Logo to="/">HEURM</Logo>
+                <Logo to="/">LOGO</Logo>
             </LogoWrapper>
             <Contents>
                 {children}

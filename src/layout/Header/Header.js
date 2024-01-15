@@ -58,7 +58,8 @@ const Header = ({ isLoggedIn, onLogout }) => {
                         </li>
                     </ul>
                 </nav>
-                <nav className={styles.navigation}>
+
+                {/* <nav className={styles.navigation}>
                     <ul>
                         <li>
                             {isLoggedIn ? (
@@ -73,12 +74,57 @@ const Header = ({ isLoggedIn, onLogout }) => {
                                 <>
                                     <Link to="/login">로그인</Link>
                                     &nbsp;&nbsp; | &nbsp;&nbsp;
-                                    <Link to="/signup">회원가입</Link>
+                                    <Link to="/register">회원가입</Link>
                                 </>
                             )}
                         </li>
                     </ul>
-                </nav>
+                </nav> */}
+
+
+                {/* <div>
+                    {isLoggedIn ? (
+                        <>
+                            <button onClick={onLogout}>
+                                로그아웃
+                            </button>
+                            &nbsp;&nbsp;
+                            <Link to="/mypage">마이페이지</Link>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login">
+                                <button>로그인</button>
+                            </Link>
+                            &nbsp;&nbsp;
+                            <Link to="/register">
+                                <button>회원가입</button>
+                            </Link>
+                        </>
+                    )}
+                </div> */}
+
+                <div className={styles.btnContainer}>
+                    {isLoggedIn ? (
+                        <button className={styles.leftBtn} onClick={onLogout}> 로그아웃 </button>
+                    ) : (
+                        <Link to="/login">
+                            <button className={styles.leftBtn}>로그인</button>
+                        </Link>
+                    )}
+
+                    &nbsp;&nbsp;
+
+                    {isLoggedIn ? (
+                        <Link to="/mypage">
+                            <button className={styles.rightBtn}>마이페이지</button>
+                        </Link>
+                    ) : (
+                        <Link to="/register">
+                            <button className={styles.rightBtn}>회원가입</button>
+                        </Link>
+                    )}
+                </div>
 
             </div>
             {/* <Link to="/">홈</Link>

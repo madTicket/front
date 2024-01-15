@@ -3,5 +3,10 @@
 }
 
 .main {
+    // padding-top: 50px;
+    display: flex;
     min-height: calc(100vh - 180px);
+    background-color: #150026;display: flex;
+    flex-direction: column;
+    justify-content: center;
 }

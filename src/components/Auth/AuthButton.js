@@ -7,8 +7,8 @@ const Wrapper = styled.div`
     padding-top: 0.6rem;
     padding-bottom: 0.5rem;
 
-    background: ${oc.teal[6]};
-    color: white;
+    background: #E2F254;
+    color: black;
 
     text-align: center;
     font-size: 1.25rem;
@@ -19,11 +19,11 @@ const Wrapper = styled.div`
     transition: .2s all;
 
     &:hover {
-        background: ${oc.teal[5]};
+        background: #E5E790;
     }
 
     &:active {
-        background: ${oc.teal[7]};
+        background: #C6CA19;
     }
 
 `;
