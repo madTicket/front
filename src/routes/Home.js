@@ -9,7 +9,7 @@ const Home = () => {
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                 <SearchBar />
             </div>
-            <h3 style={{ textAlign: 'center' }}> 인기 콘서트 </h3>
+            <h3 style={{ textAlign: 'center', color: 'white' }}> 인기 콘서트 </h3>
         </div>
 
     );

@@ -71,7 +71,7 @@ const SearchBar = () => {
             <Search width={25} height={25} fill='black' alt="searchIcon" className='search-icon' />
             <input className='search-bar'
                 type="text"
-                placeholder="  검색어를 입력하세요"
+                placeholder="검색어를 입력하세요"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />

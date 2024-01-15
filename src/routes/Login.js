@@ -84,7 +84,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
-import { Box } from '../components/CommonStyles';
+import { BackgroundColor, Box } from '../components/CommonStyles';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -131,25 +131,27 @@ const Login = () => {
 
     console.log("Login");
     return (
-        <AuthWrapper >
-            <AuthContent title={'로그인'}>
-                <InputWithLabel
-                    label="이메일"
-                    name="email"
-                    placeholder="이메일"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)} />
-                <InputWithLabel
-                    label="비밀번호"
-                    name="password"
-                    placeholder="비밀번호"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)} />
-                <AuthButton onClick={login}>로그인</AuthButton>
-                <RightAlignedLink to="/register">회원가입</RightAlignedLink>
-            </AuthContent>
-        </AuthWrapper>
+        // <BackgroundColor>
+            <AuthWrapper >
+                <AuthContent title={'로그인'}>
+                    <InputWithLabel
+                        label="이메일"
+                        name="email"
+                        placeholder="이메일"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} />
+                    <InputWithLabel
+                        label="비밀번호"
+                        name="password"
+                        placeholder="비밀번호"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)} />
+                    <AuthButton onClick={login}>로그인</AuthButton>
+                    <RightAlignedLink to="/register">회원가입</RightAlignedLink>
+                </AuthContent>
+            </AuthWrapper>
+        // </BackgroundColor>
     );
 };
 
