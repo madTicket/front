@@ -64,6 +64,7 @@ import { WhiteBox, BackgroundImg } from '../components/CommonStyles';
 import Dots from '../components/Dots';
 import { AuthContent } from '../components/Auth';
 import { ReactComponent as Arrow } from "../assets/images/down-arrow.svg"
+import Calendar from '../components/Calender/Calendar';
 
 const PageTop = ({ category, concertData }) => (
     <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -75,9 +76,9 @@ const PageTop = ({ category, concertData }) => (
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <div>
                     <h2>{category}</h2>
-                    <br />
                     <h4> 장소: {concertData.location} </h4>
                     <h4> 일시: {formatDate(concertData.dateStart)} - {formatDate(concertData.dateEnd)} </h4>
+                    <Calendar/>
                     <h4> 가격: </h4>
                 </div>
             </div>
@@ -92,7 +93,7 @@ const PageBottom = ({ category, concertData }) => (
     <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
         <WhiteBox width='100%' height='90vh' rad='0px' opacity='1' style={{ marginTop: '8h' }}>
 
-            <h2 style={{ color: 'white', paddingTop: '80px' }}>{category}</h2>
+            
         </WhiteBox>
     </div>
 );

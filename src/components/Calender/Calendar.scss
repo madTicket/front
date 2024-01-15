@@ -1,0 +1,137 @@
+$lightblue: #3ea8ff;
+$deepblue: #156fb9;
+$darkblue: rgb(12, 86, 129);
+
+.Calendar {
+    align-items: center; //수직 중앙 정렬
+    justify-content: center; //수평 중앙 정렬
+    text-align: center;
+    height: 20vh;
+    width: 100%;
+    overflow: initial;
+
+    .Year-MonthList {
+        font-family: "SEBANG";
+        font-style: italic;
+        color: #1864ab;
+        margin-bottom: 5px;
+        width: 80%;
+
+        .Year {
+            font-size: 1.8rem;
+        }
+
+        .Month {
+            font-size: 1.2rem;
+        }
+    }
+
+    /* 요일과 날짜를 표시하는 컨테이너 (List)*/
+    .DayList {
+        position: relative;
+        width: auto;
+        height: 3.5rem;
+        font-size: 1.4rem;
+        color: #005096;
+        float: left;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+
+        .daylistSector {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            float: left;
+            margin-left: 0.15em;
+            margin-right: 0.15em;
+            cursor: pointer;
+            width: 40px;
+            height: 60px;
+            border: 0.04em solid rgba(12, 86, 129,0);
+            border-radius: 40px;
+            padding-top: 10px;
+
+            .Sun {
+                color: red !important;
+            }
+
+            .Sat {
+                color: $deepblue !important;
+            }
+
+            &:hover {
+                background: #224861;
+                color: white;
+
+                .week {
+                    color: white;
+                }
+            }
+
+            &.current-day {
+                border: 0.04em solid rgb(12, 86, 129);
+            }
+
+            .week {
+                font-family: "Nanum Myeongjo";
+                font-size: 0.6em;
+                align-items: center; //수직 중앙 정렬
+                justify-content: center; //수평 중앙 정렬
+                color: black;
+                text-align: center;
+                margin-bottom: 7px;
+            }
+
+            .day {
+                font-weight: bold;
+                font-size: 0.8em;
+            }
+        }
+
+        .ArrowButton {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: #000; /* 아이콘 색상을 원하는 색상으로 변경 */
+            margin: 0 10px; /* 버튼 간격 조절 */
+        }
+        
+        .ArrowButton:hover {
+            color: #fff; /* 마우스 호버 시 아이콘 색상 변경 */
+        }
+
+        /* 버튼 이벤트를 위해서 버튼을 만들었지만 
+    아이콘에서 이벤트 처리를 하기위해 보이지는 않도록 만들었음 */
+
+        .CalendarIconContainer {
+            align-items: center; //수직 중앙 정렬
+            justify-content: right; //수평 중앙 정렬
+            position: absolute;
+            width: 50px;
+            height: 100px;
+            font-style: bold;
+            cursor: pointer;
+            color: #353535;
+
+            .CalendarIconText {
+                font-size: 23px;
+            }
+
+            .CalendarIconSpan {
+                position: absolute;
+                left: 50%;
+                right: 40%;
+                margin-top: 40px;
+
+                .CalendarIcon {
+                    color: #353535;
+                    margin-bottom: -12px;
+                    font-size: 3rem;
+                    text-align: center;
+                }
+            }
+        }
+    }
+}

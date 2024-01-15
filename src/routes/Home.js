@@ -1,6 +1,7 @@
 // Home.js
 import React from 'react';
 import SearchBar from '../components/SearchBar/SearchBar';
+import Calendar from '../components/Calender/Calendar';
 
 const Home = () => {
     return (
@@ -10,6 +11,7 @@ const Home = () => {
                 <SearchBar />
             </div>
             <h3 style={{ textAlign: 'center', color: 'white' }}> 인기 콘서트 </h3>
+            {/* <Calendar /> */}
         </div>
 
     );
