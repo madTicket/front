@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { Year, Month } from "./Year_Month";
 import { BiCalendar, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import cn from "classnames";
@@ -7,16 +7,19 @@ import { setWeek } from 'date-fns';
 import DatePicker from "react-datepicker";
 import startOfWeek from 'date-fns/startOfWeek'
 
+// const Calendar = ({startDate, endDate}) => {
 const Calendar = () => {
     const now = new Date();
     const todayweek = now.getDay();
     const today = now.getDate();
+    const startDate = now.getDate();
+    const endDate = now.getDate();
     const lastday = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 
     const [daylist, setDaylist] = useState([]);
     const weeklist = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const [currentDate, setCurrentDate] = useState(now);
-    const [selectedDate, setSelectedDate] = useState(new Date());
+    const [selectedDate, setSelectedDate] = useState(now);
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     const getAlldate = (today, lastday) => {
@@ -95,16 +98,33 @@ const Calendar = () => {
         moveWeekToSpecificDate(startofweek);
     };
 
+    const handleDayClick = (selectedCalendar) => {
+        const newDate = new Date(currentDate);
+        newDate.setDate(selectedCalendar.day);
+
+        const isWithinRange = newDate >= startDate && newDate <= endDate && newDate >= today;
+
+        if (isWithinRange) {
+            setSelectedDate(newDate);
+        }
+    };
+
     const moveWeekToSpecificDate = (startDate) => {
         setDaylist(getAlldate(startDate.getDate(), new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0).getDate()));
         setCurrentDate(startDate);
     };
 
+    const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
+        <button className="example-custom-input" onClick={onClick} ref={ref}>
+            {value}
+        </button>
+    ));
+
     return (
         <div>
             <div className={cn("Calendar")} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                 <div className="Year-MonthList" style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline', justifyContent: 'space-between' }}>
-                    <p>
+                    <p style={{ marginTop: '0px', marginBottom: '20px' }}>
                         <span className={cn("Year")}>
                             <Year id="Year" format={"yyyy"} ticking={false} timezone={"KR/Pacific"} currentDate={currentDate} />
                         </span>
@@ -114,33 +134,28 @@ const Calendar = () => {
                         </span>
                     </p>
 
-                    <div className={cn("CalendarIconContainer")} onClick={() => setShowDatePicker(true)} >
-                        <span className={cn("CalendarIconText")}>전체 보기</span>
-                        <BiCalendar className={cn("CalendarIcon")} />
+                    <div className="DatePickerContainer">
+                        <DatePicker
+                            selected={selectedDate}
+                            onChange={handleDateChange}
+                            minDate={startDate > new Date() ? startDate : new Date()}
+                            maxDate={endDate}
+                            customInput={<ExampleCustomInput />}
+                            popperModifiers={{ // 모바일 web 환경에서 화면을 벗어나지 않도록 하는 설정
+                                preventOverflow: {
+                                    enabled: true,
+                                },
+                            }}
+                            popperPlacement="auto" // 화면 중앙에 팝업이 뜨도록
+                        />
                     </div>
-
-                    {showDatePicker && (
-                        <div className="DatePickerContainer">
-                            <DatePicker
-                                selected={selectedDate}
-                                onChange={handleDateChange}
-                                minDate={new Date()} // 과거 날짜 disable
-                                popperModifiers={{ // 모바일 web 환경에서 화면을 벗어나지 않도록 하는 설정
-                                    preventOverflow: {
-                                        enabled: true,
-                                    },
-                                }}
-                                popperPlacement="auto" // 화면 중앙에 팝업이 뜨도록
-                            />
-                        </div>
-                    )}
                 </div>
                 <div className={cn("DayList")} ticking={false} style={{ display: 'flex', justifyContent: 'space-between' }} >
 
                     <BiChevronLeft onClick={() => moveWeek('prev')} className={cn("ArrowButton")} />
                     <div className={cn("daylistContainer")} >
                         {CalendarObject.map((calendar, index) => (
-                            <div className={cn("daylistSector", { "current-day": isCurrentDay(calendar) })} key={index}>
+                            <div className={cn("daylistSector", { "current-day": isCurrentDay(calendar) }, { "selected-day": selectedDate && selectedDate.getDate() === calendar.day }, { "selectable-day": calendar.day >= startDate && calendar.day <= endDate && calendar.day >= today })} key={index} onClick={() => handleDayClick(calendar)}>
                                 <div
                                     className={cn(
                                         "week",

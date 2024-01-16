@@ -25,7 +25,7 @@ function Register() {
             return false;
         }
         try {
-            const response = await axios.post("${API_BASE_URL}/signUp", { userName: username, userId: userid, email: email, password: password }, {
+            const response = await axios.post(`${API_BASE_URL}/signUp`, { userName: username, userId: userid, email: email, password: password }, {
                 withCredentials: true
             })
             console.log(" ", response.data)

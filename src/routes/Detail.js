@@ -65,10 +65,12 @@ import Dots from '../components/Dots';
 import { AuthContent } from '../components/Auth';
 import { ReactComponent as Arrow } from "../assets/images/down-arrow.svg"
 import Calendar from '../components/Calender/Calendar';
+import CardList from '../components/Ticket/CardList';
+import axios from 'axios';
 
 const PageTop = ({ category, concertData }) => (
     <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <h4 style={{ color: 'white', paddingTop: '80px' }} >  </h4>
+        <h4 style={{ color: 'white', paddingTop: '30px' }} >  </h4>
         <BackgroundImg src={concertData.image} />
         <WhiteBox width="700px" opacity={0.75}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -76,24 +78,34 @@ const PageTop = ({ category, concertData }) => (
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <div>
                     <h2>{category}</h2>
-                    <h4> 장소: {concertData.location} </h4>
-                    <h4> 일시: {formatDate(concertData.dateStart)} - {formatDate(concertData.dateEnd)} </h4>
-                    <Calendar/>
-                    <h4> 가격: </h4>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>
+                        <h4> 가격 </h4>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}>
+                            <p> VIP석: {concertData.VIP} <br /> R석: {concertData.R} <br /> S석: {concertData.S} <br /> A석: {concertData.A} </p>
+                        </div>
+                    </div>
+                    <h4 style={{ marginTop: '0px', marginBottom: '0px' }}> 장소: {concertData.location} </h4>
+                    <h4 style={{ marginTop: '10px', marginBottom: '20px' }}> 일시: {formatDate(concertData.dateStart)} - {formatDate(concertData.dateEnd)} </h4>
+                    {/* <WhiteBox style={{padding: '0px'}} width='450px' height='180px'> */}
+
+                    <Calendar startDate={concertData.dateStart} endDate={concertData.dateEnd} />
+                    {/* </WhiteBox> */}
+                    <br />
                 </div>
             </div>
         </WhiteBox>
-        <h4 style={{ color: 'white', paddingTop: '20px' }} > 거래하기 </h4>
-        <Arrow width={20} height={20} fill='white' alt="arrowIcon" style={{ paddingBottom: '10px' }} />
-        {/* <h4 style={{ color: 'white', paddingDown: '10px'}} >  </h4> */}
+        <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <h4 style={{ color: 'white', paddingTop: '10px', marginBottom: '10px' }} > 거래하기 </h4>
+            <Arrow width={20} height={20} fill='white' alt="arrowIcon" style={{ paddingBottom: '10px' }} />
+            {/* <h4 style={{ color: 'white', paddingDown: '10px'}} >  </h4> */}
+        </div>
     </div>
 );
 
-const PageBottom = ({ category, concertData }) => (
+const PageBottom = ({ ticketList }) => (
     <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <WhiteBox width='100%' height='90vh' rad='0px' opacity='1' style={{ marginTop: '8h' }}>
-
-            
+        <WhiteBox width='100%' height='80vh' rad='0px' opacity='1' style={{ marginTop: '8h' }}>
+            <CardList cardsData={ticketList}/>
         </WhiteBox>
     </div>
 );
@@ -111,6 +123,7 @@ const Detail = () => {
     const [concertData, setConcertData] = useState({});
     const outerDivRef = useRef();
     const [scrollIndex, setScrollIndex] = useState(1);
+    const [ticketList, setTicketList] = useState([])
 
     useEffect(() => {
         const fetchData = async () => {
@@ -126,6 +139,27 @@ const Detail = () => {
                 console.log("Fetched data:", data);
             } catch (error) {
                 console.error('Error:', error);
+            }
+        };
+        fetchData();
+    }, [category]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                
+                console.log("fetching tickets")
+                const response = await axios.post(`${API_BASE_URL}/ticketView`, { category }, {
+                    withCredentials: true
+                });
+
+                const data = response.data
+                console.log("data", data)
+                const dataArray = Object.values(data.result);
+                setTicketList(dataArray);
+                console.log("dataArray", dataArray);
+            } catch (error) {
+                console.error('Error fetching ticket data:', error);
             }
         };
 
@@ -195,11 +229,11 @@ const Detail = () => {
             <PageTop category={category} concertData={concertData} />
 
             {/* 하단 페이지 */}
-            <div style={{ width:'70%', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'left'}}>
+            <div style={{ width: '70%', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'left' }}>
 
-                <h2 style={{ color: 'white', paddingTop: '20px', paddingBottom: '20px'}}>{category}</h2>
+                <h2 style={{ color: 'white', paddingTop: '20px', paddingBottom: '20px' }}>{category}</h2>
             </div>
-            <PageBottom category={category} concertData={concertData} />
+            <PageBottom ticketList={ticketList} />
         </div>
     );
 };

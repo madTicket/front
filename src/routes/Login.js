@@ -106,7 +106,7 @@ const Login = () => {
             console.log('Email:', email);
             console.log('Password:', password);
 
-            const response = await axios.post("${API_BASE_URL}/login", { email: email, password: password }, {
+            const response = await axios.post(`${API_BASE_URL}/login`, { email: email, password: password }, {
                 withCredentials: true
             })
             console.log(" ", response.data)
