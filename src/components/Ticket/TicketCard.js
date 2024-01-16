@@ -3,8 +3,10 @@ import { FaShoppingCart } from "react-icons/fa";
 import { FaRegHeart, FaHeart } from "react-icons/fa";
 import ticket from '../../assets/images/ticket.svg';
 import './TicketCard.scss';
+import axios from 'axios';
+import { API_BASE_URL } from '../../config';
 
-function TicketCard({ type, price, userId, ticketDate }) {
+function TicketCard({ unique, type, price, userId, ticketDate }) {
     const [isLiked, setIsLiked] = useState(false);
     const [inCart, setInCart] = useState(false);
 
@@ -22,8 +24,27 @@ function TicketCard({ type, price, userId, ticketDate }) {
         // TODO: 장바구니 및 구매 어떻게 할 것인지
     };
 
-    const handleCartClick = () => {
-        setInCart(!inCart)
+    const handleCartClick = async () => {
+        if(inCart){
+            alert('이미 장바구니에 담긴 상품입니다.');
+        }
+        else{
+            setInCart(true)
+            try {
+                const email = localStorage.getItem('email')
+                const response = await axios.post(`${API_BASE_URL}/cart`, { unique: unique, email: email}, {
+                    withCredentials: true
+                })
+                console.log(" ", response.data)
+                // Check the success message in the response
+                if (response.data.message === 'success') {
+                    alert('해당 상품이 장바구니에 담겼습니다.');
+                }
+            } catch (e) {
+                console.error(e)
+            }
+        }
+
         // TODO: 좋아요 한거 백엔드 업데이트 
         // TODO: 장바구니 및 구매 어떻게 할 것인지
     };

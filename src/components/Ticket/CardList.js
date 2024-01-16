@@ -34,7 +34,7 @@ const CardList = ({ cardsData, category, concertData }) => {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: '850px', width: '60%', margin: '0 auto', overflowX: 'auto', maxHeight: '60vh' }}>
                 <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', margin: '0 auto' }}>
                     {cardsData.map((result) => (
-                        <TicketCard key={result.unique} type={result.type} price={result.price} userId={result.userId} ticketDate={result.ticketDate} />
+                        <TicketCard key={result.unique} unique={result.unique} type={result.type} price={result.price} userId={result.userId} ticketDate={result.ticketDate} />
                     ))}
                 </div>
                 {isModalOpen && <Modal onClose={closeModal} category={category} concertData={concertData} />}
