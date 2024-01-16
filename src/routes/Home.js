@@ -1,31 +1,36 @@
 // Home.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar/SearchBar';
 import Calendar from '../components/Calender/Calendar';
 import { API_BASE_URL } from '../config';
 import { Link } from 'react-router-dom';
+import './Home.scss'
 
 const Home = () => {
     const [famousList, setFamousList] = useState([]);
 
-    fetch(`${API_BASE_URL}/famous`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            // 추가적인 헤더 설정 가능
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
+    useEffect(() => {
+        // Fetch famousList when the component mounts
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/famous`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Additional headers can be set here
+                    },
+                });
 
-            console.log("data", data)
-            const dataArray = Object.values(data.result);
-            setFamousList(dataArray)
-            console.log("dataArray", dataArray);
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+                const data = await response.json();
+                const dataArray = Object.values(data.result);
+                setFamousList(dataArray);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
 
     return (
         <div>
@@ -37,12 +42,15 @@ const Home = () => {
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '30%', marginRight: '30%', marginBottom: '100px' }}>
                 {famousList.slice(0, 3).map((concert, index) => (
-                    <Link key={index} to={`/detail/${concert.category}`}>
+                    <Link key={index} to={`/detail/${concert.category}`} className="image-container">
                         <img
                             src={concert.image}
                             alt={`Concert ${index + 1}`}
-                            style={{ marginLeft: '20px', marginRight: '20px', width: '300px', objectFit: 'cover' }}
+                            className="concert-image"
                         />
+                        <div className="overlay">
+                            <p className="category-text">{concert.category}</p>
+                        </div>
                     </Link>
                 ))}
             </div>

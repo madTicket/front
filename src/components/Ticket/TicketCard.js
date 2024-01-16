@@ -53,7 +53,7 @@ function TicketCard({ unique, type, price, userId, ticketDate }) {
             </div>
             <div className='card-content' style={{ width: '50px', height: '80px', display: 'flex', flexDirection: 'column', alignItems: 'baseline', justifyContent: 'space-between' }}>
                 {isLiked ? (
-                    <FaHeart onClick={handleLikeClick} className='icon' style={{ fontSize: '1.5em' }} />
+                    <FaHeart color='red' onClick={handleLikeClick} className='icon' style={{ fontSize: '1.5em' }} />
                 ) : (
                     <FaRegHeart onClick={handleLikeClick} className='icon' style={{ fontSize: '1.5em' }} />
                 )}

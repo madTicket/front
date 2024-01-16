@@ -1,0 +1,39 @@
+.image-container {
+    position: relative;
+}
+
+.concert-image {
+    width: 300px;
+    object-fit: cover;
+    margin-left: 20px;
+    margin-right: 20px;
+    transition: transform 0.3s;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.category-text {
+    color: white;
+    font-size: 20px;
+    text-align: center;
+}
+
+.image-container:hover .concert-image {
+    transform: scale(1.1); /* Add scaling effect on hover if desired */
+}
+
+.image-container:hover .overlay {
+    opacity: 1;
+}
