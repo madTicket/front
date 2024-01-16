@@ -36,6 +36,9 @@ function TicketCard({ unique, type, price, userId, ticketDate }) {
             if (response.data.message === 'success') {
                 alert('해당 상품이 장바구니에 담겼습니다.');
             }
+            else if (response.data.message === 'already inserted') {
+                alert('이미 장바구니에 있는 상품입니다.');
+            }
         } catch (e) {
             console.error(e)
         }

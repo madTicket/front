@@ -36,7 +36,7 @@ const BoardList = () => {
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', margin: '0 auto', maxWidth: '900px' }}>
                 {allList.map((concert, index) => (
-                    <Link key={index} to={`/detail/${concert.category}`} className="image-container" style={{ flex: '0 0 30%', margin: '10px' }}>
+                    <Link key={index} to={`/detail/${concert.category}`} className="image-container" style={{ flex: '0 0 30%', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <img
                             src={concert.image}
                             alt={`Concert ${index + 1}`}

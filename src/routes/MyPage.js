@@ -2,6 +2,12 @@ import styled, { keyframes } from 'styled-components';
 import { OutlineBtn } from '../components/CommonStyles';
 import { MdEdit } from 'react-icons/md';
 import { API_BASE_URL } from '../config';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import ver_tickeet from '../assets/images/ver_ticket.svg'
+import '../components/Ticket/TicketCard.scss'
+import HorizonLine from '../components/HorizonLine';
+import { TiDelete } from "react-icons/ti";
 
 const slideUpAnimation = keyframes`
     from {
@@ -17,12 +23,12 @@ const slideUpAnimation = keyframes`
 
 const WhiteBox = styled.div`
     width: 100%;
-    height: 100vh;
+    height: 200vh;
     border-top-left-radius: 200px;
     border-top-right-radius: 200px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    background-color: white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    background-color: ${props => props.width || 'white'};
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -38,44 +44,175 @@ const ContentWrapper = styled.div`
     width: 70%;
 `;
 
+const MyLabel = styled.div`
+display: flex;
+align-items: center;
+justify-content: center;
+margin: 0 auto;
+width: 80%;
+border-radius: 100px;
+background-color: transperant;
+border-color: #1864ab;
+border: 2px solid #1864ab;
+margin-bottom: 10px
+`;
+
+const MyList = styled.div`
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+margin: 0 auto;
+width: 80%;
+border-top-left-radius: 50px;
+border-top-right-radius: 50px;
+border-bottom-left-radius: 10px;
+border-bottom-right-radius: 10px;
+background-color: transperant;
+border-color: #1864ab;
+border: 2px solid #1864ab;
+`;
+
 const MyPage = () => {
     const email = localStorage.getItem('email');
+    const [cartList, setCartList] = useState([]);
+    const [sellingList, setSellingList] = useState([]);
 
-    const url = `${API_BASE_URL}/cart?email=${encodeURIComponent(email)}`;
-    
-        fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // Additional headers can be set here
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                console.log("data", data);
+    const cardStyle = {
+        backgroundImage: `url(${ver_tickeet})`,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        height: '1050px'
+    };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(`${API_BASE_URL}/cartget?email=${encodeURIComponent(email)}`, {
+                    withCredentials: true
+                })
+                const data = response.data
                 const dataArray = Object.values(data.result);
-                console.log("dataArray", dataArray);
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
 
-    // Enable overflow when the component mounts
-    document.body.style.overflow = 'hidden';
+                setCartList(dataArray);
+                console.log(cartList);
+
+            } catch (e) {
+                console.error(e)
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`${API_BASE_URL}/ticketUser?email=${encodeURIComponent(email)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // Additional headers can be set here
+                    },
+                });
+
+                const data = await response.json();
+                const dataArray = Object.values(data.results);
+                setSellingList(dataArray);
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
 
     const onAnimationEnd = () => {
         // After animation ends, disable further animation and enable overflow
         document.body.style.overflow = 'auto';
     };
 
+    const formattedPrice = (price) => {
+        const numericPrice = isNaN(price) ? 0 : Number(price);
+        return numericPrice.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
+    };
+
     return (
         <WhiteBox onAnimationStart={onAnimationEnd}>
-            <ContentWrapper style={{paddingTop: '70px'}}>
+            <ContentWrapper style={{ paddingTop: '70px', paddingBottom: '30px' }}>
                 <h2>{email}님 안녕하세요. &nbsp;&nbsp;</h2>
                 <OutlineBtn width="150px">
-                    정보 수정하기
+                    정보 수정하기 &nbsp;
                     <MdEdit />
                 </OutlineBtn>
+            </ContentWrapper>
+
+            <ContentWrapper>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <div className="card" style={cardStyle}>
+                        <div className="card-content">
+                            <h2 className="card-title" style={{ marginTop: '30px', marginBottom: '40px', textAlign: 'center' }}>장바구니</h2>
+                            <HorizonLine />
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', margin: '0 auto' }}>
+                                {cartList
+                                    .map((result) => (
+                                        <div key={result.unique}>
+                                            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginLeft: '5%', marginRight: '5%' }}>
+                                                <div>
+                                                    <p className="card-description" style={{ fontSize: '1.2em', marginBottom: '5pt' }}>{result.category}</p>
+                                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                                        <p className="card-description">{result.type}석</p>
+                                                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                        <p className="card-description">{formattedPrice(result.price)}</p>
+                                                    </div>
+
+
+                                                </div>
+                                                <TiDelete style={{ fontSize: '1.7em' }} />
+                                            </div>
+                                            <br />
+
+                                        </div>
+
+                                    ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <div className="card" style={cardStyle}>
+                        <div className="card-content">
+                            <h2 className="card-title" style={{ marginTop: '30px', marginBottom: '40px', textAlign: 'center' }}>판매 중</h2>
+                            <HorizonLine />
+                            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', flexWrap: 'wrap', margin: '0 auto' }}>
+                                {sellingList
+                                    .map((result) => (
+                                        <div key={result.unique}>
+                                            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginLeft: '5%', marginRight: '5%' }}>
+                                                <div>
+                                                    <p className="card-description" style={{ fontSize: '1.2em', marginBottom: '5pt' }}>{result.category}</p>
+                                                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                                                        <p className="card-description">{result.type}석</p>
+                                                        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                        <p className="card-description">{formattedPrice(result.price)}</p>
+                                                    </div>
+
+
+                                                </div>
+                                                <TiDelete style={{ fontSize: '1.7em' }} />
+                                            </div>
+                                            <br />
+
+                                        </div>
+
+                                    ))}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </ContentWrapper>
         </WhiteBox>
     );
