@@ -83,6 +83,14 @@ $darkblue: rgb(12, 86, 129);
                 }
             }
 
+            &.nonselectable-day {
+                color: gray;
+        
+                .week {
+                    color: gray;
+                }
+            }
+
             .week {
                 font-family: "Nanum Myeongjo";
                 font-size: 0.6em;

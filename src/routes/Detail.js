@@ -69,63 +69,8 @@ import CardList from '../components/Ticket/CardList';
 import axios from 'axios';
 import { OutlineBtn } from '../components/CommonStyles';
 
-const PageTop = ({ category, concertData }) => (
-    <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-        <h4 style={{ color: 'white', paddingTop: '30px' }} >  </h4>
-        <BackgroundImg src={concertData.image} />
-        <WhiteBox width="700px" opacity={0.75}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-                <img src={concertData.image} alt={category} width={'250px'} />
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <div>
-                    <h2>{category}</h2>
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>
-                        <h4> 가격 </h4>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}>
-                            <p> VIP석: {formattedPrice(concertData.VIP)} <br /> R석: {formattedPrice(concertData.R)} <br /> S석: {formattedPrice(concertData.S)} <br /> A석: {formattedPrice(concertData.A)} </p>
-                        </div>
-                    </div>
-                    <h4 style={{ marginTop: '0px', marginBottom: '0px' }}> 장소: {concertData.location} </h4>
-                    <h4 style={{ marginTop: '10px', marginBottom: '20px' }}> 일시: {formatDate(concertData.dateStart)} - {formatDate(concertData.dateEnd)} </h4>
-                    {/* <WhiteBox style={{padding: '0px'}} width='450px' height='180px'> */}
 
-                    <Calendar startDate={concertData.dateStart} endDate={concertData.dateEnd} />
-                    {/* </WhiteBox> */}
-                    <br />
-                </div>
-            </div>
-        </WhiteBox>
-        <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <h4 style={{ color: 'white', paddingTop: '10px', marginBottom: '10px' }} > 거래하기 </h4>
-            <Arrow width={20} height={20} fill='white' alt="arrowIcon" style={{ paddingBottom: '10px' }} />
-            {/* <h4 style={{ color: 'white', paddingDown: '10px'}} >  </h4> */}
-        </div>
-    </div>
-);
 
-const PageBottom = ({ category, concertData, ticketList }) => (
-    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <WhiteBox width='100%' height='80vh' rad='0px' opacity='1' style={{ marginTop: '0vh', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }}>
-            <CardList cardsData={ticketList} category={category} concertData={concertData} style={{ paddingTop: '20px' }} />
-        </WhiteBox>
-    </div>
-);
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    const year = date.getFullYear().toString().slice(2);
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}/${month}/${day}`;
-}
-
-const formattedPrice = (price) => {
-    // 가격이 문자열이면 숫자로 변환
-    const numericPrice = isNaN(price) ? 0 : Number(price);
-
-    // 숫자를 원화로 포맷
-    return numericPrice.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
-};
 
 const Detail = () => {
     const { category } = useParams();
@@ -133,6 +78,72 @@ const Detail = () => {
     const outerDivRef = useRef();
     const [scrollIndex, setScrollIndex] = useState(1);
     const [ticketList, setTicketList] = useState([])
+
+    const [selectedDate, setSelectedDate] = useState(new Date());
+
+    const updateSelectedDate = (date) => {
+        console.log("selectedDate", selectedDate)
+        // Update the state or perform any action with the selectedDate in PageTop
+        setSelectedDate(date);
+    };
+
+    const PageTop = ({ category, concertData, selectedDate }) => (
+        <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+            <h4 style={{ color: 'white', paddingTop: '30px' }} >  </h4>
+            <BackgroundImg src={concertData.image} />
+            <WhiteBox width="700px" opacity={0.75}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                    <img src={concertData.image} alt={category} width={'250px'} />
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div>
+                        <h2>{category}</h2>
+                        <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>
+                            <h4> 가격 </h4>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}>
+                                <p> VIP석: {formattedPrice(concertData.VIP)} <br /> R석: {formattedPrice(concertData.R)} <br /> S석: {formattedPrice(concertData.S)} <br /> A석: {formattedPrice(concertData.A)} </p>
+                            </div>
+                        </div>
+                        <h4 style={{ marginTop: '0px', marginBottom: '0px' }}> 장소: {concertData.location} </h4>
+                        <h4 style={{ marginTop: '10px', marginBottom: '20px' }}> 일시: {formatDate(concertData.dateStart)} - {formatDate(concertData.dateEnd)} </h4>
+                        {/* <WhiteBox style={{padding: '0px'}} width='450px' height='180px'> */}
+
+                        <Calendar startDate={concertData.dateStart} endDate={concertData.dateEnd} pselectedDate={selectedDate} updateSelectedDate={updateSelectedDate} />
+                        {/* </WhiteBox> */}
+                        <br />
+                    </div>
+                </div>
+            </WhiteBox>
+            <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
+                <h4 style={{ color: 'white', paddingTop: '10px', marginBottom: '10px' }} > 거래하기 </h4>
+                <Arrow width={20} height={20} fill='white' alt="arrowIcon" style={{ paddingBottom: '10px' }} />
+                {/* <h4 style={{ color: 'white', paddingDown: '10px'}} >  </h4> */}
+            </div>
+        </div>
+    );
+
+    const PageBottom = ({ category, concertData, ticketList, selectedDate }) => (
+        <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <WhiteBox width='100%' height='80vh' rad='0px' opacity='1' style={{ marginTop: '0vh', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }}>
+                <CardList selectedDate={selectedDate} cardsData={ticketList} category={category} concertData={concertData} style={{ paddingTop: '20px' }} />
+            </WhiteBox>
+        </div>
+    );
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        const year = date.getFullYear().toString().slice(2);
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const day = date.getDate().toString().padStart(2, '0');
+        return `${year}/${month}/${day}`;
+    }
+
+    const formattedPrice = (price) => {
+        // 가격이 문자열이면 숫자로 변환
+        const numericPrice = isNaN(price) ? 0 : Number(price);
+
+        // 숫자를 원화로 포맷
+        return numericPrice.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
+    };
 
     useEffect(() => {
         const fetchData = async () => {
@@ -185,7 +196,7 @@ const Detail = () => {
 
             if (deltaY > 0) {
                 // 스크롤 내릴 때
-                if (scrollTop >= 0 && scrollTop < pageHeight-100) {
+                if (scrollTop >= 0 && scrollTop < pageHeight - 100) {
                     console.log("1>2");
                     outerDivRef.current.scrollTo({
                         top: pageHeight,

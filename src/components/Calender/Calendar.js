@@ -8,7 +8,7 @@ import DatePicker from "react-datepicker";
 import startOfWeek from 'date-fns/startOfWeek'
 import { DateBtn } from '../CommonStyles';
 
-const Calendar = ({ startDate, endDate }) => {
+const Calendar = ({ startDate, endDate, pselectedDate, updateSelectedDate }) => {
     const now = new Date();
     const todayweek = now.getDay();
     const today = now.getDate();
@@ -17,8 +17,7 @@ const Calendar = ({ startDate, endDate }) => {
     const [daylist, setDaylist] = useState([]);
     const weeklist = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const [currentDate, setCurrentDate] = useState(now);
-    const [selectedDate, setSelectedDate] = useState(new Date());
-    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [selectedDate, setSelectedDate] = useState(pselectedDate || new Date())
 
     const getAlldate = (today, lastday) => {
         let dates = [];
@@ -89,11 +88,13 @@ const Calendar = ({ startDate, endDate }) => {
 
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        setShowDatePicker(false);
 
         // Update the weekly calendar based on the selected date
         const startofweek = startOfWeek(date, { weekStartsOn: 1 }); // Assuming Sunday is the start of the week
         moveWeekToSpecificDate(startofweek);
+        
+        // Call the updateSelectedDate function to pass the selectedDate to the parent (PageTop)
+        updateSelectedDate(date);
     };
 
     const handleDayClick = (selectedCalendar) => {
