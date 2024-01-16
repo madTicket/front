@@ -6,6 +6,7 @@ import Home from "./routes/Home";
 import Login from "./routes/Login";
 import Register from "./routes/Register";
 import Detail from "./routes/Detail";
+import MyPage from "./routes/MyPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/detail/:category" element={<Detail />} />
+      <Route path="/mypage" element={<MyPage />} />
     </Routes>
     // <div>
     //   <Login />

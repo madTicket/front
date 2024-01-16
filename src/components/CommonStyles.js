@@ -58,12 +58,23 @@ export const OutlineBtn = styled.button`
     }
 `;
 
+
+export const DateBtn = styled.button`
+border-radius: 40px;
+border-color: transparent;
+background: transparent;
+color: #1864ab;
+border: 1px solid #1864ab;
+width: 100px
+`;
+
 export const FilledBtn = styled.button`
 // color: white;
-background-color: #1864ab;
-font-weight: 600;
+background-color: rgb(12, 86, 129);
+color: white;
+font-weight: 300;
 border: none;
-border-radius:10px;
+border-radius:30px;
 overflow: hidden;
 transition: 0.3s;
 width: ${props => props.width || '100px'};

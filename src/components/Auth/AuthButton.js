@@ -10,6 +10,7 @@ const Wrapper = styled.div`
     background: #E2F254;
     color: black;
 
+    border-radius:30px;
     text-align: center;
     font-size: 1.25rem;
     font-weight: 500;

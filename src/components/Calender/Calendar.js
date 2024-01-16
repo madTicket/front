@@ -3,14 +3,12 @@ import { Year, Month } from "./Year_Month";
 import { BiCalendar, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import cn from "classnames";
 import './Calendar.scss'
-import { setWeek } from 'date-fns';
-import { parseISO } from 'date-fns';
+import { setWeek, parseISO } from 'date-fns';
 import DatePicker from "react-datepicker";
-import startOfWeek from 'date-fns/startOfWeek';
-import 'react-datepicker/dist/react-datepicker.css';
+import startOfWeek from 'date-fns/startOfWeek'
+import { DateBtn } from '../CommonStyles';
 
-const Calendar = ({startDate, endDate}) => {
-// const Calendar = () => {
+const Calendar = ({ startDate, endDate }) => {
     const now = new Date();
     const todayweek = now.getDay();
     const today = now.getDate();
@@ -19,7 +17,7 @@ const Calendar = ({startDate, endDate}) => {
     const [daylist, setDaylist] = useState([]);
     const weeklist = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
     const [currentDate, setCurrentDate] = useState(now);
-    const [selectedDate, setSelectedDate] = useState(now);
+    const [selectedDate, setSelectedDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
 
     const getAlldate = (today, lastday) => {
@@ -101,12 +99,7 @@ const Calendar = ({startDate, endDate}) => {
     const handleDayClick = (selectedCalendar) => {
         const newDate = new Date(currentDate);
         newDate.setDate(selectedCalendar.day);
-
-        const isWithinRange = newDate >= startDate && newDate <= endDate && newDate >= today;
-
-        if (isWithinRange) {
-            setSelectedDate(newDate);
-        }
+        setSelectedDate(newDate);
     };
 
     const moveWeekToSpecificDate = (startDate) => {
@@ -115,9 +108,9 @@ const Calendar = ({startDate, endDate}) => {
     };
 
     const ExampleCustomInput = forwardRef(({ value, onClick }, ref) => (
-        <button className="example-custom-input" onClick={onClick} ref={ref}>
+        <DateBtn onClick={onClick} ref={ref}>
             {value}
-        </button>
+        </DateBtn>
     ));
 
     return (
@@ -150,12 +143,12 @@ const Calendar = ({startDate, endDate}) => {
                         />
                     </div>
                 </div>
-                <div className={cn("DayList", { ticking: false })} style={{ display: 'flex', justifyContent: 'space-between' }} >
+                <div className={cn("DayList")} ticking={false} style={{ display: 'flex', justifyContent: 'space-between' }} >
 
                     <BiChevronLeft onClick={() => moveWeek('prev')} className={cn("ArrowButton")} />
-                    <div className={cn("daylistContainer")} >
+                    <div className={cn("daylistContainer")}>
                         {CalendarObject.map((calendar, index) => (
-                            <div className={cn("daylistSector", { "current-day": isCurrentDay(calendar) }, { "selected-day": selectedDate && selectedDate.getDate() === calendar.day }, { "selectable-day": calendar.day >= startDate && calendar.day <= endDate && calendar.day >= today })} key={index} onClick={() => handleDayClick(calendar)}>
+                            <div className={cn("daylistSector", { "current-day": today === calendar.day && currentDate.getMonth() === now.getMonth() && currentDate.getFullYear() === now.getFullYear(), "selected-day": selectedDate && selectedDate.toDateString() === new Date(currentDate.getFullYear(), currentDate.getMonth(), calendar.day).toDateString() })} key={index} onClick={() => handleDayClick(calendar)}>
                                 <div
                                     className={cn(
                                         "week",

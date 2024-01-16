@@ -5,20 +5,14 @@ import Select from 'react-select'
 import { BackgroundOverlay, ModalContent } from '../CommonStyles';
 import axios from 'axios';
 import { API_BASE_URL } from '../../config';
-import { OutlineBtn } from '../CommonStyles';
+import { FilledBtn } from '../CommonStyles';
 import DatePicker from 'react-datepicker';
 import { parseISO, differenceInDays } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
 import styled from "styled-components";
+import { DateBtn } from '../CommonStyles';
 
-const DateBtn = styled.button`
-border-radius: 40px;
-border-color: transparent;
-background: transparent;
-color: #1864ab;
-border: 1px solid #1864ab;
-width: 100px
-`;
+
 
 const typeOptions = [
     { value: 'VIP', label: 'VIP' },
@@ -145,47 +139,61 @@ const Modal = ({ onClose, category, concertData }) => {
                             />
                         </div>
                     </div>
-                    <p> 좌석 종류 </p>
-                    <Select
-                        options={typeOptions}
-                        value={typeOptions.find(option => option.value === type)}
-                        onChange={(selectedOption) => setType(selectedOption.value)}
-                        placeholder="Select Type"
-                    />
-                    <InputWithLabel
-                        label="일련번호"
-                        name="일련번호"
-                        placeholder="일련번호"
-                        value={unique}
-                        onChange={(e) => setUnique(e.target.value)} />
-                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline', justifyContent: 'left' }}>
+                        <div>
+                            <p> 좌석 종류 </p>
+                            <Select
+                                options={typeOptions}
+                                value={typeOptions.find(option => option.value === type)}
+                                onChange={(selectedOption) => setType(selectedOption.value)}
+                                placeholder="Select Type"
+                                styles={{
+                                    // Set a fixed width (e.g., 200px)
+                                    control: (provided) => ({ ...provided, width: 200 }),
+                                }}
+                            />
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
                         <InputWithLabel
-                            width={'40%'}
+                            width={'140%'}
+                            label="일련번호"
+                            name="일련번호"
+                            placeholder="일련번호"
+                            value={unique}
+                            onChange={(e) => setUnique(e.target.value)} />
+                    </div>
+                    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-start' }}>
+                        <InputWithLabel
+                            width={'70%'}
                             label="판매희망가격"
                             name="price"
                             placeholder="판매희망가격"
                             type="number"
                             min="0"
                             value={price}
-                            onChange={(e) => setPrice(e.target.value)} />
+                            onChange={(e) => setPrice(e.target.value)}
+                        />
+                        <p style={{fontSize: '20px', marginLeft: '-50px', marginTop: '50px'}}>₩</p>
 
-                        <OutlineBtn onClick={fetchData}> 예상판매시간</OutlineBtn>
+                        <FilledBtn onClick={fetchData} style={{ marginLeft: '20px', marginTop: '30px'}}>
+                            예상판매시간
+                        </FilledBtn>
+
                         {predicted > 0 && (
-                            <p>약 {formatHoursToDaysAndHours(predicted)} 후에 판매될 것이라 예상됩니다.</p>
+                            <p style={{fontSize: '12px', color: 'gray', marginLeft: '10px', marginTop: '50px'}}>약 {formatHoursToDaysAndHours(predicted)} 후에 판매될 것이라 예상됩니다.</p>
                         )}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
-                        <label style={{ marginLeft: '10px' }}>
+                        <label style={{ marginTop: '20px', width: '300px' }}>
+                            알뜰이 사용 여부 &nbsp;&nbsp;
                             <input
                                 type="checkbox"
                                 checked={isCheckboxChecked}
                                 onChange={() => setIsCheckboxChecked(!isCheckboxChecked)}
                             />
-                            알뜰이 사용 여부
                         </label>
-                        <p style={{ fontSize: '14px' }}> 알뜰이를 이용할 경우 실시간 티켓 가격을 반영해 더 빠르고 합리적으로 가격을 조정해 티켓을 판매할 수 있도록 도와드립니다!  ※ 가격은 1시간마다 업데이트 되며 알림이 갑니다! ※ </p>
-
                     </div>
+                    <p style={{ fontSize: '12px', color: 'gray' }}> 알뜰이를 이용할 경우 실시간 티켓 가격을 반영해 더 빠르고 합리적으로 가격을 조정해 티켓을 판매할 수 있도록 도와드립니다!   &nbsp;&nbsp; ※ 가격은 1시간마다 업데이트 되며 알림이 갑니다! ※ </p>
 
                     <AuthButton onClick={uploadTicket}>티켓 올리기</AuthButton>
                 </AuthContent>

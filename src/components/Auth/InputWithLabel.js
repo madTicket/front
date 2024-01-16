@@ -16,7 +16,8 @@ const Label = styled.div`
 `;
 
 const Input = styled.input`
-    width: ${(props) => props.width || '100%'}; /* Default to 100% if width prop is not provided */
+    width: ${(props) => props.width || '97%'}; /* Default to 100% if width prop is not provided */
+    height: 30px;
     border: 1px solid ${oc.gray[3]};
     outline: none;
     border-radius: 0px;
@@ -24,6 +25,8 @@ const Input = styled.input`
     font-size: 1.2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
+    margin-top: 10px;
+    margin-bottom: 10px;
     ::placeholder {
         color: ${oc.gray[3]};
     }

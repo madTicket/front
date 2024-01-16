@@ -112,9 +112,10 @@ const Login = () => {
             console.log(" ", response.data)
             if (response.data.message === 'Found user') {
                 // Save JWT token to local storage
-                localStorage.clear()
-                localStorage.setItem('userId', response.data.userId)
-                localStorage.setItem('email', response.data.email)
+                localStorage.clear();
+                // localStorage.setItem('userId', response.data.userId);
+                // localStorage.setItem('username', response.data.username);
+                localStorage.setItem('email', response.data.email);
                 localStorage.setItem('login-token', response.data.jwt);
 
                 await new Promise((resolve) => setTimeout(resolve, 0));
