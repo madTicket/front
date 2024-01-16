@@ -4,16 +4,16 @@ import { BiCalendar, BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import cn from "classnames";
 import './Calendar.scss'
 import { setWeek } from 'date-fns';
+import { parseISO } from 'date-fns';
 import DatePicker from "react-datepicker";
-import startOfWeek from 'date-fns/startOfWeek'
+import startOfWeek from 'date-fns/startOfWeek';
+import 'react-datepicker/dist/react-datepicker.css';
 
-// const Calendar = ({startDate, endDate}) => {
-const Calendar = () => {
+const Calendar = ({startDate, endDate}) => {
+// const Calendar = () => {
     const now = new Date();
     const todayweek = now.getDay();
     const today = now.getDate();
-    const startDate = now.getDate();
-    const endDate = now.getDate();
     const lastday = new Date(now.getFullYear(), now.getMonth() + 1, 0).getDate();
 
     const [daylist, setDaylist] = useState([]);
@@ -138,8 +138,8 @@ const Calendar = () => {
                         <DatePicker
                             selected={selectedDate}
                             onChange={handleDateChange}
-                            minDate={startDate > new Date() ? startDate : new Date()}
-                            maxDate={endDate}
+                            minDate={startDate > new Date() ? parseISO(startDate) : new Date()}
+                            maxDate={new Date(endDate)}
                             customInput={<ExampleCustomInput />}
                             popperModifiers={{ // 모바일 web 환경에서 화면을 벗어나지 않도록 하는 설정
                                 preventOverflow: {
@@ -150,7 +150,7 @@ const Calendar = () => {
                         />
                     </div>
                 </div>
-                <div className={cn("DayList")} ticking={false} style={{ display: 'flex', justifyContent: 'space-between' }} >
+                <div className={cn("DayList", { ticking: false })} style={{ display: 'flex', justifyContent: 'space-between' }} >
 
                     <BiChevronLeft onClick={() => moveWeek('prev')} className={cn("ArrowButton")} />
                     <div className={cn("daylistContainer")} >

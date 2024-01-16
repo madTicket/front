@@ -16,7 +16,7 @@ const Label = styled.div`
 `;
 
 const Input = styled.input`
-    width: 100%;
+    width: ${(props) => props.width || '100%'}; /* Default to 100% if width prop is not provided */
     border: 1px solid ${oc.gray[3]};
     outline: none;
     border-radius: 0px;
@@ -29,11 +29,10 @@ const Input = styled.input`
     }
 `;
 
-// rest 쪽에는 onChange, type, name, value, placeholder 등의 input 에서 사용 하는 값들을 넣어줄수 있다.
-const InputWithLabel = ({label, ...rest}) => (
+const InputWithLabel = ({ label, width, ...rest }) => (
     <Wrapper>
         <Label>{label}</Label>
-        <Input {...rest}/>
+        <Input width={width} {...rest} />
     </Wrapper>
 );
 

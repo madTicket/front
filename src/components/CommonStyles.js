@@ -14,17 +14,17 @@ export const WhiteBox = styled.div`
     z-index: 5;
 `;
 
-export const BackgroundColor = styled.div`
-
-display: flex;
-min-height: calc(100vh - 130px);
-position: absolute;
-top: 0;
-left: 0;
-z-index: -1;
-width: 100%;
-margin: 0 auto;
-background-color:${props => props.color || '#150026' };
+export const BackgroundOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); // Adjust the transparency as needed
+    z-index: 1000; // Make sure it's on top of other elements
+    display: flex;
+    justify-content: center;
+    align-items: center;
 `;
 
 export const BackgroundImg = styled.img`
@@ -39,4 +39,45 @@ margin: 0 auto;
 filter: blur(8px); /* 블러 효과 크기 조절 가능 */
 z-index: -1;
 opacity: 0.5
+`;
+
+export const OutlineBtn = styled.button`
+    font-weight: 600;
+    border-style: groove;
+    // border-width: medium;
+    border-radius:30px;
+    color: white;
+    background-color: #150026;
+    overflow: hidden;
+    transition: 0.3s;
+    width: ${props => props.width || '100px'};
+    height: ${props => props.height || '30px'};
+
+    &:hover {
+        transform: scale(1.1);
+    }
+`;
+
+export const FilledBtn = styled.button`
+// color: white;
+background-color: #1864ab;
+font-weight: 600;
+border: none;
+border-radius:10px;
+overflow: hidden;
+transition: 0.3s;
+width: ${props => props.width || '100px'};
+height: ${props => props.height || '30px'};
+
+&:hover {
+    transform: scale(1.1);
+}
+`;
+
+export const ModalContent = styled.div`
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1001; // Make sure it's on top of the overlay
 `;

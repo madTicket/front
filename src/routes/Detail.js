@@ -67,6 +67,7 @@ import { ReactComponent as Arrow } from "../assets/images/down-arrow.svg"
 import Calendar from '../components/Calender/Calendar';
 import CardList from '../components/Ticket/CardList';
 import axios from 'axios';
+import { OutlineBtn } from '../components/CommonStyles';
 
 const PageTop = ({ category, concertData }) => (
     <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
@@ -81,7 +82,7 @@ const PageTop = ({ category, concertData }) => (
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>
                         <h4> 가격 </h4>&nbsp;&nbsp;&nbsp;&nbsp;
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'baseline' }}>
-                            <p> VIP석: {concertData.VIP} <br /> R석: {concertData.R} <br /> S석: {concertData.S} <br /> A석: {concertData.A} </p>
+                            <p> VIP석: {formattedPrice(concertData.VIP)} <br /> R석: {formattedPrice(concertData.R)} <br /> S석: {formattedPrice(concertData.S)} <br /> A석: {formattedPrice(concertData.A)} </p>
                         </div>
                     </div>
                     <h4 style={{ marginTop: '0px', marginBottom: '0px' }}> 장소: {concertData.location} </h4>
@@ -102,10 +103,10 @@ const PageTop = ({ category, concertData }) => (
     </div>
 );
 
-const PageBottom = ({ ticketList }) => (
+const PageBottom = ({ category, concertData, ticketList }) => (
     <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-        <WhiteBox width='100%' height='80vh' rad='0px' opacity='1' style={{ marginTop: '8h' }}>
-            <CardList cardsData={ticketList}/>
+        <WhiteBox width='100%' height='80vh' rad='0px' opacity='1' style={{ marginTop: '0vh', display: 'flex', justifyContent: 'flex-start', flexDirection: 'column' }}>
+            <CardList cardsData={ticketList} category={category} concertData={concertData} style={{ paddingTop: '20px' }} />
         </WhiteBox>
     </div>
 );
@@ -117,6 +118,14 @@ function formatDate(dateString) {
     const day = date.getDate().toString().padStart(2, '0');
     return `${year}/${month}/${day}`;
 }
+
+const formattedPrice = (price) => {
+    // 가격이 문자열이면 숫자로 변환
+    const numericPrice = isNaN(price) ? 0 : Number(price);
+
+    // 숫자를 원화로 포맷
+    return numericPrice.toLocaleString('ko-KR', { style: 'currency', currency: 'KRW' });
+};
 
 const Detail = () => {
     const { category } = useParams();
@@ -147,7 +156,7 @@ const Detail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                
+
                 console.log("fetching tickets")
                 const response = await axios.post(`${API_BASE_URL}/ticketView`, { category }, {
                     withCredentials: true
@@ -176,7 +185,7 @@ const Detail = () => {
 
             if (deltaY > 0) {
                 // 스크롤 내릴 때
-                if (scrollTop >= 0 && scrollTop < pageHeight) {
+                if (scrollTop >= 0 && scrollTop < pageHeight-100) {
                     console.log("1>2");
                     outerDivRef.current.scrollTo({
                         top: pageHeight,
@@ -185,13 +194,13 @@ const Detail = () => {
                     });
                     setScrollIndex(2);
                 } else {
-                    console.log("2>2");
-                    outerDivRef.current.scrollTo({
-                        top: pageHeight,
-                        left: 0,
-                        behavior: "smooth",
-                    });
-                    setScrollIndex(2);
+                    // console.log("2>2");
+                    // outerDivRef.current.scrollTo({
+                    //     top: pageHeight,
+                    //     left: 0,
+                    //     behavior: "smooth",
+                    // });
+                    // setScrollIndex(2);
                 }
             } else {
                 // 스크롤 올릴 때
@@ -233,7 +242,7 @@ const Detail = () => {
 
                 <h2 style={{ color: 'white', paddingTop: '20px', paddingBottom: '20px' }}>{category}</h2>
             </div>
-            <PageBottom ticketList={ticketList} />
+            <PageBottom category={category} concertData={concertData} ticketList={ticketList} />
         </div>
     );
 };

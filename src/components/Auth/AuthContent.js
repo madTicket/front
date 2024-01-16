@@ -9,8 +9,8 @@ const Title = styled.div`
     margin-bottom: 1rem;
 `;
 
-const AuthContent = ({ title, children }) => (
-    <div>
+const AuthContent = ({ title, children, width }) => (
+    <div style={{width: width}}>
         <Title>{title}</Title>
         {children}
     </div>
