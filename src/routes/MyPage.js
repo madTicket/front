@@ -9,6 +9,7 @@ import '../components/Ticket/TicketCard.scss'
 import HorizonLine from '../components/HorizonLine';
 import { TiDelete } from "react-icons/ti";
 import { FilledBtn } from '../components/CommonStyles';
+import EditModal from '../components/Auth/EditModal';
 
 const slideUpAnimation = keyframes`
     from {
@@ -80,6 +81,15 @@ const MyPage = () => {
     const username = localStorage.getItem('username');
     const [cartList, setCartList] = useState([]);
     const [sellingList, setSellingList] = useState([]);
+    const [isEditModalOpen, setEditModalOpen] = useState(false);
+
+    const openEditModal = () => {
+        setEditModalOpen(true);
+    };
+
+    const closeEditModal = () => {
+        setEditModalOpen(false);
+    };
 
     const cardStyle = {
         backgroundImage: `url(${ver_tickeet})`,
@@ -178,7 +188,7 @@ const MyPage = () => {
         <WhiteBox onAnimationStart={onAnimationEnd}>
             <ContentWrapper style={{ paddingTop: '70px', paddingBottom: '30px' }}>
                 <h2>{userId}({username})님 안녕하세요. &nbsp;&nbsp;</h2>
-                <FilledBtn width="150px">
+                <FilledBtn width="150px" onClick={openEditModal}>
                     정보 수정하기 &nbsp;
                     <MdEdit />
                 </FilledBtn>
@@ -248,6 +258,7 @@ const MyPage = () => {
                     </div>
                 </div>
             </ContentWrapper>
+            {isEditModalOpen && <EditModal isVisible={isEditModalOpen} onClose={closeEditModal} />}
         </WhiteBox>
     );
 };

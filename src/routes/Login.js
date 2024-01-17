@@ -109,6 +109,8 @@ const Login = () => {
             const response = await axios.post(`${API_BASE_URL}/login`, { email: email, password: password }, {
                 withCredentials: true
             })
+            
+            console.log(response.data, response.data.userName);
             console.log(" ", response.data)
             if (response.data.message === 'Found user') {
                 // Save JWT token to local storage
