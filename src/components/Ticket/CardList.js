@@ -1,9 +1,9 @@
 import React, { useState, useRef } from 'react';
 import TicketCard from './TicketCard';
-import Modal from './Modal';
 import { FilledBtn, BackgroundOverlay, ModalContent } from '../CommonStyles';
 import { API_BASE_URL } from '../../config';
 import { IoAddOutline } from "react-icons/io5";
+import Modal from './Modal';
 
 const CardList = ({ selectedDate, cardsData, category, concertData }) => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -12,23 +12,12 @@ const CardList = ({ selectedDate, cardsData, category, concertData }) => {
     console.log("cardList selectedDate", selectedDate)
 
     const openModal = () => {
-        if(localStorage.getItem('login-token')){
-            setModalOpen(true);
-        }else{
-            alert('로그인을 해야 이용하실 수 있습니다.');
-        }
+        
+        setModalOpen(true);
     };
 
     const closeModal = () => {
         setModalOpen(false);
-    };
-
-    const handleScroll = () => {
-        // Get the current scroll position
-        const scrollTop = cardListRef.current.scrollTop;
-
-        // Adjust margin-top based on the scroll position
-        cardListRef.current.style.marginTop = `${scrollTop}px`;
     };
 
     return (
@@ -38,14 +27,14 @@ const CardList = ({ selectedDate, cardsData, category, concertData }) => {
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: '850px', width: '60%', margin: '0 auto', overflowX: 'auto', maxHeight: '60vh' }}>
-                <div style={{ display: 'flex', justifyContent: 'flex-start', flexWrap: 'wrap', margin: '0 auto' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', margin: '0 auto' }}>
                     {cardsData
-                        .filter(result => !selectedDate || result.ticketDate === selectedDate) // Filter based on selectedDate
+                        // .filter(result => !selectedDate || result.ticketDate === selectedDate) // Filter based on selectedDate
                         .map((result) => (
                             <TicketCard key={result.unique} unique={result.unique} type={result.type} price={result.price} userId={result.userId} ticketDate={result.ticketDate} />
                         ))}
                 </div>
-                {isModalOpen && <Modal onClose={closeModal} category={category} concertData={concertData} />}
+                {isModalOpen && <Modal isVisible={isModalOpen} onClose={closeModal} category={category} concertData={concertData} />}
             </div>
         </>
 

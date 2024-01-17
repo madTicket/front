@@ -10,22 +10,23 @@ import HorizonLine from '../components/HorizonLine';
 import { TiDelete } from "react-icons/ti";
 import { FilledBtn } from '../components/CommonStyles';
 import EditModal from '../components/Auth/EditModal';
+import Kakaopay from '../assets/images/Kakaopay.png'
 
 const slideUpAnimation = keyframes`
     from {
-        margin-top: 100px;
+        margin-top: 270px;
         opacity: 0;
     }
 
     to {
-        margin-top: 0;
+        margin-top: 70px;
         opacity: 1;
     }
 `;
 
 const WhiteBox = styled.div`
     width: 100%;
-    height: 200vh;
+    height: 1200px;
     border-top-left-radius: 200px;
     border-top-right-radius: 200px;
     border-bottom-left-radius: 10px;
@@ -34,7 +35,7 @@ const WhiteBox = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    margin-top: 20px;
+    margin-top: 70px;
     animation: ${slideUpAnimation} 0.5s ease-in-out; /* Apply the animation here */
 `;
 
@@ -46,33 +47,16 @@ const ContentWrapper = styled.div`
     width: 70%;
 `;
 
-const MyLabel = styled.div`
-display: flex;
-align-items: center;
-justify-content: center;
-margin: 0 auto;
-width: 80%;
-border-radius: 100px;
-background-color: transperant;
-border-color: #1864ab;
-border: 2px solid #1864ab;
-margin-bottom: 10px
-`;
-
-const MyList = styled.div`
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-margin: 0 auto;
-width: 80%;
-border-top-left-radius: 50px;
-border-top-right-radius: 50px;
-border-bottom-left-radius: 10px;
-border-bottom-right-radius: 10px;
-background-color: transperant;
-border-color: #1864ab;
-border: 2px solid #1864ab;
+const PayBtn = styled.button`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+    width: 70px;
+    height: 30px;
+    border-radius: 100px;
+    background-image: url(${Kakaopay});
+    background-size: contain;
 `;
 
 const MyPage = () => {
@@ -110,6 +94,19 @@ const MyPage = () => {
 
             setCartList(dataArray);
             console.log(cartList);
+
+        } catch (e) {
+            console.error(e)
+        }
+    };
+
+    const fetchKakao = async (unique,price,category) => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/kakaopay`,{ unique: unique, category: category, price: price}, {
+                withCredentials: true
+            })
+            const url = response.data.next_url
+            window.open(url, '_blank');
 
         } catch (e) {
             console.error(e)
@@ -186,7 +183,7 @@ const MyPage = () => {
 
     return (
         <WhiteBox onAnimationStart={onAnimationEnd}>
-            <ContentWrapper style={{ paddingTop: '70px', paddingBottom: '30px' }}>
+            <ContentWrapper style={{ display: 'flex', alignItems: 'center', width: '60%', paddingTop: '70px', paddingBottom: '30px' }}>
                 <h2>{userId}({username})님 안녕하세요. &nbsp;&nbsp;</h2>
                 <FilledBtn width="150px" onClick={openEditModal}>
                     정보 수정하기 &nbsp;
@@ -195,7 +192,7 @@ const MyPage = () => {
             </ContentWrapper>
 
             <ContentWrapper>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div className="card" style={cardStyle}>
                         <div className="card-content">
                             <h2 className="card-title" style={{ marginTop: '30px', marginBottom: '40px', textAlign: 'center' }}>장바구니</h2>
@@ -205,16 +202,16 @@ const MyPage = () => {
                                     .map((result) => (
                                         <div key={result.unique}>
                                             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginLeft: '5%', marginRight: '5%' }}>
-                                                <div>
-                                                    <p className="card-description" style={{ fontSize: '1.2em', marginBottom: '5pt' }}>{result.category}</p>
+                                                <div style={{width: '60%'}}>
+                                                    <p className="card-description" style={{ fontSize: '1.2em', marginBottom: '5pt'}}>{result.category}</p>
                                                     <div style={{ display: 'flex', flexDirection: 'row' }}>
                                                         <p className="card-description">{result.type}석</p>
                                                         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
                                                         <p className="card-description">{formattedPrice(result.price)}</p>
+                                                        {/* &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; */}
                                                     </div>
-
-
                                                 </div>
+                                                <PayBtn onClick={() => fetchKakao(result.unique, result.price, result.category)}/>
                                                 <TiDelete className='icon' onClick={() => cartDelete(result.unique)} style={{ fontSize: '1.7em' }} />
                                             </div>
                                             <br />
@@ -226,7 +223,7 @@ const MyPage = () => {
                         </div>
                     </div>
                 </div>
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div className="card" style={cardStyle}>
                         <div className="card-content">
                             <h2 className="card-title" style={{ marginTop: '30px', marginBottom: '40px', textAlign: 'center' }}>판매 중</h2>

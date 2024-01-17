@@ -8,7 +8,10 @@
     position: relative;
     min-height: calc(100vh - 50px);
     z-index: 0;
-    background-color: #150026;
+    // background-image: url('https://img.freepik.com/premium-photo/a-purple-and-blue-background-with-a-purple-gradient_873925-12130.jpg');
+    // background-color: #150026;
+    background: rgb(21, 0, 38);
+    background: linear-gradient(30deg, rgba(21, 0, 38, 1) 0%, rgba(9, 9, 121, 1) 27%, rgba(152, 73, 119, 1) 62%, rgba(0, 212, 255, 1) 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;

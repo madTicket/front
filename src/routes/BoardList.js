@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../config';
 import { Link } from 'react-router-dom';
+import './Home.scss'
 
 const BoardList = () => {
 
@@ -31,7 +32,7 @@ const BoardList = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{marginBottom: '80px'}}>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <div
                     style={{
@@ -39,10 +40,10 @@ const BoardList = () => {
                         textAlign: "center",
                         borderBottom: "1px solid #fff",
                         lineHeight: "0.1em",
-                        margin: "0px 50px 60px 0",
+                        margin: "80px 50px 60px 0",
                     }}
                 />
-                <h2 style={{ textAlign: 'center', color: 'white', marginBottom: '80px' }}> 전체 공연 보기 </h2>
+                <h2 style={{ textAlign: 'center', color: 'white', marginTop: '85px', marginBottom: '80px' }}> 전체 공연 보기 </h2>
 
                 <div
                     style={{
@@ -50,7 +51,7 @@ const BoardList = () => {
                         textAlign: "center",
                         borderBottom: "1px solid #fff",
                         lineHeight: "0.1em",
-                        margin: "0px 0 60px 50px",
+                        margin: "80px 0 60px 50px",
                     }}
                 />
             </div>

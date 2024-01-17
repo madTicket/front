@@ -24,6 +24,7 @@ const LogoutModal = ({ isVisible, onClose, logout }) => {
     const logoutConfirm = () => {
         logout()
         onClose()
+        window.location.reload();
     }
 
     return (

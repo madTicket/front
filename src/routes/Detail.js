@@ -205,13 +205,13 @@ const Detail = () => {
                     });
                     setScrollIndex(2);
                 } else {
-                    // console.log("2>2");
-                    // outerDivRef.current.scrollTo({
-                    //     top: pageHeight,
-                    //     left: 0,
-                    //     behavior: "smooth",
-                    // });
-                    // setScrollIndex(2);
+                    console.log("2>2");
+                    outerDivRef.current.scrollTo({
+                        top: pageHeight,
+                        left: 0,
+                        behavior: "smooth",
+                    });
+                    setScrollIndex(2);
                 }
             } else {
                 // 스크롤 올릴 때

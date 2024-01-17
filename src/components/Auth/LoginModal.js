@@ -39,6 +39,9 @@ const LoginModal = ({ isVisible, onClose, onReg }) => {
                 withCredentials: true
             })
             console.log(" ", response.data)
+            if (response.data.message === "invalid password") { 
+                alert('아이디 혹은 비밀번호가 일치하지 않습니다.');
+            }
             if (response.data.message === 'Found user') {
                 // Save JWT token to local storage
                 localStorage.clear();

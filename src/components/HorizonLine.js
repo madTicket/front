@@ -8,7 +8,7 @@ const HorizonLine = ({ text }) => {
         textAlign: "center",
         borderBottom: "3px dashed #fff",
         lineHeight: "0.1em",
-        margin: "10px 0 40px",
+        margin: "10px auto 40px auto",
       }}
     >
     </div>

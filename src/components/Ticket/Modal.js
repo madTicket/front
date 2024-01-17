@@ -21,7 +21,7 @@ const typeOptions = [
     { value: 'A', label: 'A' },
 ];
 
-const Modal = ({ onClose, category, concertData }) => {
+const Modal = ({  isVisible, onClose, category, concertData }) => {
     const [unique, setUnique] = useState('');
     const [ticketDate, setTicketDate] = useState(new Date());
     const [maxDate, setMaxDate] = useState(new Date());
@@ -30,7 +30,9 @@ const Modal = ({ onClose, category, concertData }) => {
     const [price, setPrice] = useState(0);
     const [predicted, setPredicted] = useState('');
     const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+    const [predictText, setPredictText] = useState('');
 
+    console.log("Tickat Add Modal")
     console.log("userId", localStorage.getItem('userId'))
     console.log("email", localStorage.getItem('email'))
     console.log("login-token", localStorage.getItem('login-token'))
@@ -70,7 +72,16 @@ const Modal = ({ onClose, category, concertData }) => {
                     withCredentials: true
                 })
                 console.log(" ", response.data)
-                setPredicted(response.data.time)
+                if(response.data.message == 'keep your price low, too expensive'){
+                    setPredicted(response.data.time)
+                    setPredictText('원하시는 기한 안에 팔릴 확률이 매우 낮습니다. \n 빠른 거래를 위해서 가격을 낮추시길 권장드립니다.')
+                    console.log(predictText)
+                }else {
+
+                    setPredicted(response.data.time)
+                    console.log(response.data.time, predicted, formatHoursToDaysAndHours(predicted))
+                    setPredictText(`약 ${formatHoursToDaysAndHours(predicted)} 후에 판매될 것이라 예상됩니다.`);
+                }
             }
             // setPredicted(response.data)
 
@@ -112,8 +123,8 @@ const Modal = ({ onClose, category, concertData }) => {
     }
 
     return (
-        <BackgroundOverlay onClick={onClose}>
-            <ModalContent onClick={(e) => e.stopPropagation()}>
+        <BackgroundOverlay isVisible={isVisible} onClick={onClose}>
+            <ModalContent isVisible={isVisible} onClick={(e) => e.stopPropagation()}>
                 <AuthContent title={'티켓 등록'} width="600px">
                     <div>
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
@@ -180,7 +191,7 @@ const Modal = ({ onClose, category, concertData }) => {
                         </FilledBtn>
 
                         {predicted > 0 && (
-                            <p style={{fontSize: '12px', color: 'gray', marginLeft: '10px', marginTop: '50px'}}>약 {formatHoursToDaysAndHours(predicted)} 후에 판매될 것이라 예상됩니다.</p>
+                            <p style={{fontSize: '12px', color: 'gray', marginLeft: '10px', marginTop: '50px', width: '50%', whiteSpace: 'pre-line'}}>{predictText}</p>
                         )}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
