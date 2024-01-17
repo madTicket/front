@@ -1,76 +1,12 @@
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { API_BASE_URL } from '../config';
-// import { WhiteBox, BackgroundImg } from '../components/CommonStyles';
-
-// const Detail = () => {
-//     const { category } = useParams();
-//     const [concertData, setConcertData] = useState({});
-
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             try {
-//                 const response = await fetch(`${API_BASE_URL}/concert?category=${category}`, {
-//                     method: 'GET',
-//                     headers: {
-//                         'Content-Type': 'application/json',
-//                         // 추가적인 헤더 설정 가능
-//                     },
-//                 });
-//                 const data = await response.json();
-//                 setConcertData(data);
-//                 console.log("Fetched data:", data);
-//             } catch (error) {
-//                 console.error('Error:', error);
-//             }
-//         };
-
-//         fetchData();
-//     }, [category]); // category가 변경될 때만 실행
-
-//     function formatDate(dateString) {
-//         const date = new Date(dateString);
-//         const year = date.getFullYear().toString().slice(2);
-//         const month = (date.getMonth() + 1).toString().padStart(2, '0');
-//         const day = date.getDate().toString().padStart(2, '0');
-//         return `${year}/${month}/${day}`;
-//     }
-
-//     return (
-// <div style={{ position: 'relative' }}>
-//     <BackgroundImg src='https://image.toast.com/aaaaab/ticketlink/TKL_1/23-DRC_POSTER_540x780mm-lotte-prv_1012(1).jpg' />
-//     <WhiteBox width="700px" opacity={0.75}>
-//         <h2>{category}</h2>
-//         <div style={{ display: 'flex', alignItems: 'center' }}>
-//             <img src={concertData.image} alt={category} width={'250px'} />
-//             &nbsp;&nbsp;&nbsp;&nbsp;
-//             <div>
-//                 <h4> 장소: {concertData.location} </h4>
-//                 <h4> 일시: {formatDate(concertData.dateStart)} - {formatDate(concertData.dateEnd)} </h4>
-//                 <h4> 가격: </h4>
-//             </div>
-//         </div>
-//     </WhiteBox>
-// </div>
-//     );
-// };
-
-// export default Detail;
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
 import { WhiteBox, BackgroundImg } from '../components/CommonStyles';
 import Dots from '../components/Dots';
-import { AuthContent } from '../components/Auth';
 import { ReactComponent as Arrow } from "../assets/images/down-arrow.svg"
 import Calendar from '../components/Calender/Calendar';
 import CardList from '../components/Ticket/CardList';
 import axios from 'axios';
-import { OutlineBtn } from '../components/CommonStyles';
-
-
-
 
 const Detail = () => {
     const { category } = useParams();

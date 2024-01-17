@@ -1,10 +1,7 @@
 import React, { useEffect, forwardRef } from 'react';
 import { InputWithLabel, AuthButton, RightAlignedLink, AuthContent, AuthWrapper } from '../Auth';
-import { useState } from 'react';
 import { BackgroundOverlay, FilledBtn, ModalContent, OutlineBtn } from '../CommonStyles';
-import axios from 'axios';
 import oc from 'open-color';
-import { API_BASE_URL } from '../../config';
 import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
 

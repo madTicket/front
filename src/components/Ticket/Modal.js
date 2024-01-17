@@ -9,7 +9,6 @@ import { FilledBtn } from '../CommonStyles';
 import DatePicker from 'react-datepicker';
 import { parseISO, differenceInDays } from 'date-fns';
 import 'react-datepicker/dist/react-datepicker.css';
-import styled from "styled-components";
 import { DateBtn } from '../CommonStyles';
 
 

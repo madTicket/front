@@ -1,5 +1,4 @@
 import styled, { keyframes } from 'styled-components';
-import { OutlineBtn } from '../components/CommonStyles';
 import { MdEdit } from 'react-icons/md';
 import { API_BASE_URL } from '../config';
 import axios from 'axios';

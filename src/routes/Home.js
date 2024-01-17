@@ -1,7 +1,6 @@
 // Home.js
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../components/SearchBar/SearchBar';
-import Calendar from '../components/Calender/Calendar';
 import { API_BASE_URL } from '../config';
 import { Link } from 'react-router-dom';
 import './Home.scss'
@@ -83,8 +82,6 @@ const Home = () => {
                     </Link>
                 ))}
             </div>
-
-            {/* <Calendar /> */}
         </div >
 
     );

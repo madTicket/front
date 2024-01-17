@@ -10,20 +10,9 @@ import { Link } from "react-router-dom";
 
 const SearchBar = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [categoryList, setCategoryList] = useState([
-        { category: 'React', '#': 10 },
-        { category: 'JavaScript', '#': 8 },
-        { category: 'Python', '#': 5 },
-        { category: 'Java', '#': 3 },
-        // ..
-    ]);
     const [searchResults, setSearchResults] = useState([]);
 
     const handleSearch = () => {
-        // const filtered = categoryList.filter(
-        //     (item) => item.category.toLowerCase().includes(searchTerm.toLowerCase())
-        // );
-        // setSearchResults(filtered);
 
         // 서버로 GET 요청을 보내기
         fetch(`${API_BASE_URL}/search?category=${encodeURIComponent(searchTerm)}`, {
@@ -35,13 +24,6 @@ const SearchBar = () => {
         })
             .then(response => response.json())
             .then(data => {
-                // console.log(categoryList)
-                // console.log(data.result);
-                // 서버로부터 받은 JSON 데이터 처리
-                // const categoryNames = data.map(result => result.category);
-                // setSearchResults(data.result);
-                // console.log(categoryNames);
-
                 console.log("data", data)
                 const dataArray = Object.values(data.result);
                 setSearchResults(dataArray);

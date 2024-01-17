@@ -37,24 +37,12 @@ const Calendar = ({ startDate, endDate, pselectedDate, updateSelectedDate }) => 
         return dates;
     };
 
-    // const CalendarDay = getAlldate(today, lastday);
-    // const Calendarweek = getAllweek(todayweek);
-
     useEffect(() => {
         setDaylist(getAlldate(today, lastday));
         console.log(daylist, weeklist)
     }, [today, lastday, todayweek]);
 
     let CalendarObject = [
-        // { week: Calendarweek[0], day: CalendarDay[0] },
-        // { week: Calendarweek[1], day: CalendarDay[1] },
-        // { week: Calendarweek[2], day: CalendarDay[2] },
-        // { week: Calendarweek[3], day: CalendarDay[3] },
-        // { week: Calendarweek[4], day: CalendarDay[4] },
-        // { week: Calendarweek[5], day: CalendarDay[5] },
-        // { week: Calendarweek[6], day: CalendarDay[6] },
-
-
         { week: weeklist[0], day: daylist[0] },
         { week: weeklist[1], day: daylist[1] },
         { week: weeklist[2], day: daylist[2] },
