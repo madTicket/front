@@ -6,6 +6,7 @@ import LoginModal from '../../components/Auth/LoginModal';
 import RegisterModal from '../../components/Auth/RegisterModal';
 import LogoutModal from '../../components/Auth/LogoutModal'
 import { FilledBtn, OutlineBtn } from '../../components/CommonStyles';
+import Title from '../../assets/images/title.svg';
 
 axios.defaults.withCredentials = true;
 
@@ -72,13 +73,15 @@ const Header = ({ isLoggedIn, onLogout }) => {
     return (
         <header className={styles.header}>
             <div className={styles.contents}>
-                <div className={styles.logo} style={{ width: '300px' }}>
+                <div className={styles.logo} style={{ width: '400px' }}>
                     {/* LOGO */}
-                    <div style={{display: 'flex', alignItems: 'flex-end'}}>
+                    <div style={{ display: 'flex', alignItems: 'flex-end' }}>
 
-                        <Link to="/">LOGO</Link>
+                        <Link to="/" style={{ width: '110px', marginRight: '20px' }}>
+                            <img src={Title} style={{ display: 'block', width: '100%' }} />
+                        </Link>
 
-                        <div  style={{marginLeft:'20px'}} className={styles.viewAll}>
+                        <div style={{ marginLeft: '0px' }} className={styles.viewAll}>
                             <Link to="/board">전체 보기</Link>
                         </div>
                     </div>
@@ -158,7 +161,7 @@ const Header = ({ isLoggedIn, onLogout }) => {
 
                     {isLoggedIn ? (
                         <Link to="/mypage">
-                            <FilledBtn  fill='#005096' >마이페이지</FilledBtn>
+                            <FilledBtn fill='#005096' >마이페이지</FilledBtn>
                         </Link>
                     ) : (
                         // <Link to="/register">

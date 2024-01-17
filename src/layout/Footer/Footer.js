@@ -6,8 +6,9 @@ const Footer = () => {
     return (
         <footer className={styles.footer}>
             <div className={styles.contents}>
-                <hr />
-                푸터 입니다.
+                <p style={{opacity: 0.6}}>KAIST 2023W MadCamp</p>
+                <p style={{opacity: 0.6}}>ⓒ Song Jihyo, Yang Junwon</p>
+
             </div>
         </footer>
     );

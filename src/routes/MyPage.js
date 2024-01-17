@@ -184,7 +184,7 @@ const MyPage = () => {
     return (
         <WhiteBox onAnimationStart={onAnimationEnd}>
             <ContentWrapper style={{ display: 'flex', alignItems: 'center', width: '60%', paddingTop: '70px', paddingBottom: '30px' }}>
-                <h2>{userId}({username})님 안녕하세요. &nbsp;&nbsp;</h2>
+                <h2 style={{fontSize: '35px', paddingTop: '1px'}}>{userId}({username})님, &nbsp;</h2><h2 style={{paddingTop: '3px'}}> 안녕하세요. &nbsp;&nbsp;</h2>
                 <FilledBtn width="150px" onClick={openEditModal}>
                     정보 수정하기 &nbsp;
                     <MdEdit />

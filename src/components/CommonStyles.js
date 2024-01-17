@@ -75,6 +75,7 @@ width: 100px
 
 export const FilledBtn = styled.button`
 background-color: ${props => props.fill || '#150026'};
+backgroud:${props => props.gradient};
 color: ${props => props.color || 'white'};
 font-weight: 300;
 border: none;

@@ -5,6 +5,7 @@ import Calendar from '../components/Calender/Calendar';
 import { API_BASE_URL } from '../config';
 import { Link } from 'react-router-dom';
 import './Home.scss'
+import Title from '../assets/images/title.svg';
 
 const Home = () => {
     const [famousList, setFamousList] = useState([]);
@@ -36,8 +37,13 @@ const Home = () => {
         <div>
             {/* <img src='/logo192.png' style={{ display: 'flex', alignItems: 'center'}}/> */}
 
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-                <SearchBar />
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', height: '100vh', width: '100%', marginTop: '-50px' }}>
+
+                <img src={Title} style={{ display: 'block', margin: '0 auto -50px auto', width: '50%' }} />
+                <p style={{ color: 'white', textAlign: 'center', fontFamily: 'PyengChangPeace', letterSpacing: '4px', opacity: 0.6 }}>Online Musical & Concert <br /> Safe Transaction AI Platform</p>
+                <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
+                    <SearchBar />
+                </div>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                 <div
@@ -65,7 +71,7 @@ const Home = () => {
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '30%', marginRight: '30%', marginBottom: '100px' }}>
                 {famousList.slice(0, 3).map((concert, index) => (
-                    <Link key={index} to={`/detail/${concert.category}`} className="image-container">
+                    <Link key={index} to={`/detail/${concert.category}`} className="image-container"  style={{ flex: '0 0 30%', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
                         <img
                             src={concert.image}
                             alt={`Concert ${index + 1}`}
@@ -79,7 +85,7 @@ const Home = () => {
             </div>
 
             {/* <Calendar /> */}
-        </div>
+        </div >
 
     );
 };

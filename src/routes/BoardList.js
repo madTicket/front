@@ -64,7 +64,7 @@ const BoardList = () => {
                             className="concert-image"
                             style={{ width: '100%', height: 'auto' }}
                         />
-                        <div className="overlay">
+                        <div className="overlay" style={{width: '110%'}}>
                             <p className="category-text">{concert.category}</p>
                         </div>
                     </Link>
