@@ -8,6 +8,7 @@ import ver_tickeet from '../assets/images/ver_ticket.svg'
 import '../components/Ticket/TicketCard.scss'
 import HorizonLine from '../components/HorizonLine';
 import { TiDelete } from "react-icons/ti";
+import { FilledBtn } from '../components/CommonStyles';
 
 const slideUpAnimation = keyframes`
     from {
@@ -75,6 +76,8 @@ border: 2px solid #1864ab;
 
 const MyPage = () => {
     const email = localStorage.getItem('email');
+    const userId = localStorage.getItem('userId');
+    const username = localStorage.getItem('username');
     const [cartList, setCartList] = useState([]);
     const [sellingList, setSellingList] = useState([]);
 
@@ -87,48 +90,79 @@ const MyPage = () => {
         height: '1050px'
     };
 
+    const fetchCartData = async () => {
+        try {
+            const response = await axios.post(`${API_BASE_URL}/cartget`,{ email: email}, {
+                withCredentials: true
+            })
+            const data = response.data
+            const dataArray = Object.values(data.result);
+
+            setCartList(dataArray);
+            console.log(cartList);
+
+        } catch (e) {
+            console.error(e)
+        }
+    };
+
+    const fetchSellingData = async () => {
+        try {
+            const response = await fetch(`${API_BASE_URL}/ticketUser?email=${encodeURIComponent(email)}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Additional headers can be set here
+                },
+            });
+
+            const data = await response.json();
+            const dataArray = Object.values(data.results);
+            setSellingList(dataArray);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(`${API_BASE_URL}/cartget?email=${encodeURIComponent(email)}`, {
-                    withCredentials: true
-                })
-                const data = response.data
-                const dataArray = Object.values(data.result);
-
-                setCartList(dataArray);
-                console.log(cartList);
-
-            } catch (e) {
-                console.error(e)
-            }
-        };
-
-        fetchData();
+        fetchCartData();
     }, []);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch(`${API_BASE_URL}/ticketUser?email=${encodeURIComponent(email)}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        // Additional headers can be set here
-                    },
-                });
-
-                const data = await response.json();
-                const dataArray = Object.values(data.results);
-                setSellingList(dataArray);
-            } catch (error) {
-                console.error('Error:', error);
-            }
-        };
-
-        fetchData();
+        fetchSellingData();
     }, []);
 
+    const cartDelete = async (unique) => {
+        console.log(email, unique);
+        try {
+            const response = await axios.delete(`${API_BASE_URL}/cartdelete/${encodeURIComponent(email)}/${encodeURIComponent(unique)}`, {
+                withCredentials: true
+            })
+            const data = response.data
+
+            console.log(response)
+            fetchCartData();
+
+        } catch (e) {
+            console.error(e)
+        }
+    };
+
+    const sellingDelete = async (unique) => {
+        console.log(email, unique);
+        try {
+            const response = await axios.delete(`${API_BASE_URL}/ticketdelete/${encodeURIComponent(unique)}`, {
+                withCredentials: true
+            })
+            const data = response.data
+
+            console.log(response)
+            fetchSellingData();
+
+        } catch (e) {
+            console.error(e)
+        }
+    };
 
     const onAnimationEnd = () => {
         // After animation ends, disable further animation and enable overflow
@@ -143,11 +177,11 @@ const MyPage = () => {
     return (
         <WhiteBox onAnimationStart={onAnimationEnd}>
             <ContentWrapper style={{ paddingTop: '70px', paddingBottom: '30px' }}>
-                <h2>{email}님 안녕하세요. &nbsp;&nbsp;</h2>
-                <OutlineBtn width="150px">
+                <h2>{userId}({username})님 안녕하세요. &nbsp;&nbsp;</h2>
+                <FilledBtn width="150px">
                     정보 수정하기 &nbsp;
                     <MdEdit />
-                </OutlineBtn>
+                </FilledBtn>
             </ContentWrapper>
 
             <ContentWrapper>
@@ -171,7 +205,7 @@ const MyPage = () => {
 
 
                                                 </div>
-                                                <TiDelete style={{ fontSize: '1.7em' }} />
+                                                <TiDelete className='icon' onClick={() => cartDelete(result.unique)} style={{ fontSize: '1.7em' }} />
                                             </div>
                                             <br />
 
@@ -202,7 +236,7 @@ const MyPage = () => {
 
 
                                                 </div>
-                                                <TiDelete style={{ fontSize: '1.7em' }} />
+                                                <TiDelete className='icon' onClick={() => sellingDelete(result.unique)} style={{ fontSize: '1.7em' }} />
                                             </div>
                                             <br />
 

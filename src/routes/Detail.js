@@ -91,10 +91,10 @@ const Detail = () => {
         <div style={{ position: 'relative', height: 'calc(100vh - 50px)', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
             <h4 style={{ color: 'white', paddingTop: '30px' }} >  </h4>
             <BackgroundImg src={concertData.image} />
-            <WhiteBox width="700px" opacity={0.75}>
+            <WhiteBox width="780px" opacity={0.75}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img src={concertData.image} alt={category} width={'250px'} />
-                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    <img src={concertData.image} alt={category} width={'300px'} />
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <div>
                         <h2>{category}</h2>
                         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'baseline' }}>

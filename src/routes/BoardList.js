@@ -32,8 +32,28 @@ const BoardList = () => {
 
     return (
         <div>
-            <h2 style={{ textAlign: 'center', color: 'white', marginBottom: '70px' }}> 전체 공연 </h2>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <div
+                    style={{
+                        width: "20%",
+                        textAlign: "center",
+                        borderBottom: "1px solid #fff",
+                        lineHeight: "0.1em",
+                        margin: "0px 50px 60px 0",
+                    }}
+                />
+                <h2 style={{ textAlign: 'center', color: 'white', marginBottom: '80px' }}> 전체 공연 보기 </h2>
 
+                <div
+                    style={{
+                        width: "20%",
+                        textAlign: "center",
+                        borderBottom: "1px solid #fff",
+                        lineHeight: "0.1em",
+                        margin: "0px 0 60px 50px",
+                    }}
+                />
+            </div>
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap', margin: '0 auto', maxWidth: '900px' }}>
                 {allList.map((concert, index) => (
                     <Link key={index} to={`/detail/${concert.category}`} className="image-container" style={{ flex: '0 0 30%', margin: '10px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>

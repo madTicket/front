@@ -25,6 +25,9 @@ export const BackgroundOverlay = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0; // Set initial opacity to 0
+    transition: opacity 1s ease-in-out; // Apply transition to opacity
+    ${({ isVisible }) => isVisible && 'opacity: 1;'} // Conditional styling based on isVisible prop
 `;
 
 export const BackgroundImg = styled.img`
@@ -45,9 +48,11 @@ export const OutlineBtn = styled.button`
     font-weight: 600;
     border-style: groove;
     // border-width: medium;
-    border-radius:30px;
-    color: white;
-    background-color: #150026;
+    border-radius: 40px;
+    border-color: transparent;
+    background: transparent;
+    color: ${props => props.color || '#1864ab'};
+    border: ${props => props.outline || '1px solid #1864ab'};
     overflow: hidden;
     transition: 0.3s;
     width: ${props => props.width || '100px'};
@@ -69,9 +74,8 @@ width: 100px
 `;
 
 export const FilledBtn = styled.button`
-// color: white;
-background-color: rgb(12, 86, 129);
-color: white;
+background-color: ${props => props.fill || '#150026'};
+color: ${props => props.color || 'white'};
 font-weight: 300;
 border: none;
 border-radius:30px;
@@ -91,4 +95,8 @@ export const ModalContent = styled.div`
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     z-index: 1001; // Make sure it's on top of the overlay
+    opacity: 0; // Set initial opacity to 0
+    transform: translateY(20px); // Set initial position below the viewport
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out; // Apply transition to opacity and transform
+    ${({ isVisible }) => isVisible && 'opacity: 1; transform: translateY(0);'} // Conditional styling based on isVisible prop
 `;

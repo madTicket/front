@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef } from 'react';
 import { Year, Month } from "./Year_Month";
-import { BiCalendar, BiChevronLeft, BiChevronRight } from "react-icons/bi";
+import { BiChevronLeft, BiChevronRight } from "react-icons/bi";
 import cn from "classnames";
 import './Calendar.scss'
 import { setWeek, parseISO } from 'date-fns';

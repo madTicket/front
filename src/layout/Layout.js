@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import Header from "./Header/Header";
 import Footer from "./Footer/Footer";
 import styles from './Layout.module.scss'
+import { useNavigate } from 'react-router';
 
 const Layout = (props) => {
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
+    const navigate = useNavigate();
 
     useEffect(() => {
         // Check the authentication status when the component mounts
@@ -19,7 +22,10 @@ const Layout = (props) => {
 
     const logout = () => {
         localStorage.removeItem('login-token');
+        localStorage.clear();
         checkAuthenticationStatus();
+
+        navigate('/');
     };
 
     return (

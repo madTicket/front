@@ -7,8 +7,8 @@ const Wrapper = styled.div`
     padding-top: 0.6rem;
     padding-bottom: 0.5rem;
 
-    background: #E2F254;
-    color: black;
+    background: #156fb9;
+    color: white;
 
     border-radius:30px;
     text-align: center;
@@ -20,11 +20,11 @@ const Wrapper = styled.div`
     transition: .2s all;
 
     &:hover {
-        background: #E5E790;
+        background: #1864ab;
     }
 
     &:active {
-        background: #C6CA19;
+        background: #005096;
     }
 
 `;

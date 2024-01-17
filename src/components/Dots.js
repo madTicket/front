@@ -4,9 +4,9 @@ const Dot = ({ num, currentPage }) => {
             style={{
                 width: 10,
                 height: 10,
-                border: '1px solid #C6CA19',
+                border: '1px solid #005096',
                 borderRadius: 999,
-                backgroundColor: currentPage === num ? "#C6CA19" : "white",
+                backgroundColor: currentPage === num ? "#005096" : "white",
                 transitionDuration: 1000,
                 transition: "background-color 0.5s",
             }}

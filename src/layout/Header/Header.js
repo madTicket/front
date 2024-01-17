@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import styles from './Header.module.scss';
 import axios from "axios";
+import LoginModal from '../../components/Auth/LoginModal';
+import RegisterModal from '../../components/Auth/RegisterModal';
+import LogoutModal from '../../components/Auth/LogoutModal'
+import { FilledBtn, OutlineBtn } from '../../components/CommonStyles';
 
 axios.defaults.withCredentials = true;
 
@@ -15,6 +19,35 @@ axios.defaults.withCredentials = true;
 // });
 
 const Header = ({ isLoggedIn, onLogout }) => {
+
+
+    const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+    const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
+    const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
+
+    const openLoginModal = () => {
+        setLoginModalOpen(true);
+    };
+
+    const closeLoginModal = () => {
+        setLoginModalOpen(false);
+    };
+
+    const openRegisterModal = () => {
+        setRegisterModalOpen(true);
+    };
+
+    const closeRegisterModal = () => {
+        setRegisterModalOpen(false);
+    };
+
+    const openLogoutModal = () => {
+        setLogoutModalOpen(true);
+    };
+
+    const closeLogoutModal = () => {
+        setLogoutModalOpen(false);
+    };
 
     // async function loginBtn () {
     //     // try{
@@ -39,25 +72,32 @@ const Header = ({ isLoggedIn, onLogout }) => {
     return (
         <header className={styles.header}>
             <div className={styles.contents}>
-                <div className={styles.logo}>
+                <div className={styles.logo} style={{ width: '300px' }}>
                     {/* LOGO */}
-                    <Link to="/">LOGO</Link>
+                    <div style={{display: 'flex', alignItems: 'flex-end'}}>
+
+                        <Link to="/">LOGO</Link>
+
+                        <div  style={{marginLeft:'20px'}} className={styles.viewAll}>
+                            <Link to="/board">전체 보기</Link>
+                        </div>
+                    </div>
                 </div>
 
-                <nav className={styles.navigation}>
-                    <ul>
-                        {/* <li>
+                {/* <nav className={styles.navigation}>
+                    <ul> */}
+                {/* <li>
                             <Link to="/">홈</Link>
                             <script>
                                 console.log("Home");
                             </script>
                         </li>
                         &nbsp;&nbsp; | &nbsp;&nbsp; */}
-                        <li>
-                            <Link to="/board">전체보기</Link>
+                {/* <li>
+                            <Link to="/board">전체 보기</Link>
                         </li>
                     </ul>
-                </nav>
+                </nav> */}
 
                 {/* <nav className={styles.navigation}>
                     <ul>
@@ -106,26 +146,31 @@ const Header = ({ isLoggedIn, onLogout }) => {
 
                 <div className={styles.btnContainer}>
                     {isLoggedIn ? (
-                        <button className={styles.leftBtn} onClick={onLogout}> 로그아웃 </button>
+                        <OutlineBtn color='white' outline='1px solid white' onClick={openLogoutModal}> 로그아웃 </OutlineBtn>
                     ) : (
-                        <Link to="/login">
-                            <button className={styles.leftBtn}>로그인</button>
-                        </Link>
+                        // <Link to="/login">
+                        //     <button className={styles.leftBtn}>로그인</button>
+                        // </Link>
+                        <OutlineBtn color='white' outline='1px solid white' onClick={openLoginModal}>로그인</OutlineBtn>
                     )}
 
                     &nbsp;&nbsp;
 
                     {isLoggedIn ? (
                         <Link to="/mypage">
-                            <button className={styles.rightBtn}>마이페이지</button>
+                            <FilledBtn  fill='#005096' >마이페이지</FilledBtn>
                         </Link>
                     ) : (
-                        <Link to="/register">
-                            <button className={styles.rightBtn}>회원가입</button>
-                        </Link>
+                        // <Link to="/register">
+                        //     <button className={styles.rightBtn}>회원가입</button>
+                        // </Link>
+                        <FilledBtn fill='#005096' onClick={openRegisterModal}>회원가입</FilledBtn>
+
                     )}
                 </div>
-
+                {isRegisterModalOpen && <RegisterModal isVisible={isRegisterModalOpen} onClose={closeRegisterModal} onLog={openLoginModal} />}
+                {isLoginModalOpen && <LoginModal isVisible={isLoginModalOpen} onClose={closeLoginModal} onReg={openRegisterModal} />}
+                {isLogoutModalOpen && <LogoutModal isVisible={isLogoutModalOpen} onClose={closeLogoutModal} logout={onLogout} />}
             </div>
             {/* <Link to="/">홈</Link>
             &nbsp;&nbsp; | &nbsp;&nbsp;

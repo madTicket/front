@@ -10,3 +10,13 @@
         opacity: 1;
     }
 }
+
+.icon {
+    transition: color 0.3s;
+    /* 색상 변화에 트랜지션 효과 추가 */
+}
+
+.icon:hover {
+    transform: scale(1.1);
+    color: red;
+}

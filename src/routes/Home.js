@@ -35,10 +35,33 @@ const Home = () => {
     return (
         <div>
             {/* <img src='/logo192.png' style={{ display: 'flex', alignItems: 'center'}}/> */}
+
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                 <SearchBar />
             </div>
-            <h2 style={{ textAlign: 'center', color: 'white', marginBottom: '70px' }}> 인기 뮤지컬 </h2>
+            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <div
+                    style={{
+                        width: "30%",
+                        textAlign: "center",
+                        borderBottom: "1px solid #fff",
+                        lineHeight: "0.1em",
+                        margin: "0px 50px 60px 0",
+                    }}
+                />
+                <h2 style={{ textAlign: 'center', color: 'white', marginBottom: '70px' }}> 인기 뮤지컬 </h2>
+
+                <div
+                    style={{
+                        width: "30%",
+                        textAlign: "center",
+                        borderBottom: "1px solid #fff",
+                        lineHeight: "0.1em",
+                        margin: "0px 0 60px 50px",
+                    }}
+                />
+            </div>
+
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginLeft: '30%', marginRight: '30%', marginBottom: '100px' }}>
                 {famousList.slice(0, 3).map((concert, index) => (

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import TicketCard from './TicketCard';
 import Modal from './Modal';
-import { OutlineBtn, BackgroundOverlay, ModalContent } from '../CommonStyles';
+import { FilledBtn, BackgroundOverlay, ModalContent } from '../CommonStyles';
 import { API_BASE_URL } from '../../config';
 import { IoAddOutline } from "react-icons/io5";
 
@@ -12,7 +12,11 @@ const CardList = ({ selectedDate, cardsData, category, concertData }) => {
     console.log("cardList selectedDate", selectedDate)
 
     const openModal = () => {
-        setModalOpen(true);
+        if(localStorage.getItem('login-token')){
+            setModalOpen(true);
+        }else{
+            alert('로그인을 해야 이용하실 수 있습니다.');
+        }
     };
 
     const closeModal = () => {
@@ -30,7 +34,7 @@ const CardList = ({ selectedDate, cardsData, category, concertData }) => {
     return (
         <>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: '850px', width: '60%', margin: '0 auto', marginBottom: '20px' }}>
-                <OutlineBtn onClick={openModal} style={{ alignSelf: 'flex-end', marginTop: '20px' }} endIcon={<IoAddOutline />}>티켓 올리기</OutlineBtn>
+                <FilledBtn onClick={openModal} style={{ alignSelf: 'flex-end', marginTop: '20px' }} endIcon={<IoAddOutline />}>티켓 올리기</FilledBtn>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', minWidth: '850px', width: '60%', margin: '0 auto', overflowX: 'auto', maxHeight: '60vh' }}>
