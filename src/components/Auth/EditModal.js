@@ -23,11 +23,11 @@ const EditModal = ({ isVisible, onClose }) => {
         if (!passwordo) {
             alert('기존 비밀번호를 입력해주세요.');
             return false;
-        } else if (!password){
+        } else if (!password) {
             alert('새로운 비밀번호를 입력해주세요.');
             return false;
         }
-            else if (!passwordc || password != passwordc) {
+        else if (!passwordc || password != passwordc) {
             alert('비밀번호가 일치하지 않습니다.');
             return false;
         }
@@ -46,7 +46,7 @@ const EditModal = ({ isVisible, onClose }) => {
 
                 localStorage.setItem('email', email);
                 localStorage.setItem('userId', userid);
-                localStorage.setItem('username',username);
+                localStorage.setItem('username', username);
 
                 onClose()
                 // Additional logic for successful signup, e.g., redirect or update UI
@@ -62,7 +62,9 @@ const EditModal = ({ isVisible, onClose }) => {
                 <AuthContent title="회원정보 수정" width="400px">
                     <InputWithLabel label="이름" name="username" placeholder="이름" value={username} onChange={(e) => setUserName(e.target.value)} />
                     <InputWithLabel label="별명" name="userid" placeholder="별명" value={userid} onChange={(e) => setUserId(e.target.value)} />
-                    <p>{emailo}</p>
+                    <div style={{ display: 'flex', flexDirection: 'row' }}>
+                        <p>이메일: &nbsp;</p><p>{emailo}</p>
+                    </div>
                     <InputWithLabel label="기존 비밀번호" name="passwordOriginal" placeholder="기존 비밀번호" type="password" value={passwordo} onChange={(e) => setPasswordO(e.target.value)} />
                     <InputWithLabel label="새 비밀번호" name="password" placeholder="비밀번호" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                     <InputWithLabel label="새 비밀번호 확인" name="passwordConfirm" placeholder="비밀번호 확인" type="password" value={passwordc} onChange={(e) => setPasswordC(e.target.value)} />
